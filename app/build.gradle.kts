@@ -4,7 +4,7 @@ plugins {
 
 android {
     namespace = "com.example.sistema_inventario_ingeso"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.sistema_inventario_ingeso"
