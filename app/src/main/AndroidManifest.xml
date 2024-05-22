@@ -13,6 +13,9 @@
         android:theme="@style/Theme.Sistemainventarioingeso"
         tools:targetApi="31">
         <activity
+            android:name="Logica.ListaMateriasPrimas"
+            android:exported="false" />
+        <activity
             android:name="Logica.ListaProductosActivity"
             android:exported="false" />
         <activity

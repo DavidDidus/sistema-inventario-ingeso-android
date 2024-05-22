@@ -25,8 +25,10 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         Intent intent = new Intent(this, ListaProductosActivity.class);
         intent.putExtra("sistema", (Serializable) sistema);
         startActivity(intent);
-
-
-
+    }
+    public void pressMateriasButton(View v){
+        Intent intent = new Intent(this, ListaMateriasPrimas.class);
+        intent.putExtra("sistema",(Serializable) sistema);
+        startActivity(intent);
     }
 }
