@@ -10,6 +10,7 @@ public class SistemaImpl implements Sistema{
     private final List<MateriaPrima> listaMateriaPrima;
     private final List<Producto> listaProducto;
 
+
     public SistemaImpl(){
         listaMateriaPrima = new ArrayList<>();
         listaProducto = new ArrayList<>();
