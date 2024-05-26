@@ -1,4 +1,4 @@
-package Logica;
+package Actividades;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.widget.SearchView;
 
 import com.example.sistema_inventario_ingeso.R;
+
+import Logica.Sistema;
 
 public class ListaProductosActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
     Sistema sistema;

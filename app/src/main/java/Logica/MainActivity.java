@@ -10,6 +10,9 @@ import com.example.sistema_inventario_ingeso.R;
 
 import java.io.Serializable;
 
+import Actividades.ListaMateriasPrimas;
+import Actividades.ListaProductosActivity;
+
 public class MainActivity extends AppCompatActivity implements Serializable {
 
     Sistema sistema;

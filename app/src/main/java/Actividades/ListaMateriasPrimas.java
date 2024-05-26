@@ -1,10 +1,12 @@
-package Logica;
+package Actividades;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
 import com.example.sistema_inventario_ingeso.R;
+
+import Logica.Sistema;
 
 public class ListaMateriasPrimas extends AppCompatActivity {
 
