@@ -1,11 +1,16 @@
 package Utils;
 
+import Actividades.IngresarProductoActivity;
+import Actividades.VerActivity;
 import Dominio.Producto;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,7 +20,7 @@ import java.util.ArrayList;
 
 
 public class AdaptadorProductos extends RecyclerView.Adapter<AdaptadorProductos.ProductoViewHolder> {
-    ArrayList<Producto> listaProductos;
+    static ArrayList<Producto> listaProductos;
     ArrayList<Producto> listaOriginal;
 
     public AdaptadorProductos(ArrayList<Producto> listaProductos) {
@@ -57,6 +62,15 @@ public class AdaptadorProductos extends RecyclerView.Adapter<AdaptadorProductos.
             viewCategoria = itemView.findViewById(R.id.viewCategoria);
             viewValor = itemView.findViewById(R.id.viewValor);
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Context context = v.getContext();
+                    Intent intent = new Intent(context, VerActivity.class);
+                    intent.putExtra("datos", listaProductos.get(getAdapterPosition()));
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 

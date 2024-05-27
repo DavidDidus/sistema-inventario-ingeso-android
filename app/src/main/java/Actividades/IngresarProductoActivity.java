@@ -17,6 +17,7 @@ public class IngresarProductoActivity extends AppCompatActivity {
     private EditText etProductName,etProductCategory,etProductUnidad,
                      etProductPrice,etProductAmount;
 
+
     Sistema sistema;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +29,8 @@ public class IngresarProductoActivity extends AppCompatActivity {
         etProductCategory = findViewById(R.id.etProductCategory);
         etProductAmount = findViewById(R.id.etProductAmount);
         etProductPrice = findViewById(R.id.etProductPrice);
-        etProductUnidad = findViewById(R.id.etProductUnidad);
+
+
     }
     public void pressRegistro(View v){
         if (areAllFieldsFilled()) {

@@ -9,7 +9,7 @@ import Dominio.Producto;
 
 public class SistemaImpl implements Sistema, Serializable {
     private final List<MateriaPrima> listaMateriaPrima;
-    private final List<Producto> listaProducto;
+    private List<Producto> listaProducto;
 
 
     public SistemaImpl(){
@@ -22,6 +22,11 @@ public class SistemaImpl implements Sistema, Serializable {
     @Override
     public List<Producto> getListaProducto() {
         return listaProducto;
+    }
+
+    @Override
+    public void setListaProducto(ArrayList<Producto> productos) {
+        listaProducto = productos;
     }
 
     @Override
@@ -88,7 +93,7 @@ public class SistemaImpl implements Sistema, Serializable {
         listaProducto.remove(producto);
     }
     private void obtenerProductos(){
-        ingresarProducto(new Producto("perfume","Producto 1", 10, "kg", 15.99));
+        ingresarProducto(new Producto("perfume"," 1", 10, "kg", 15.99));
         ingresarProducto(new Producto("perfume","Producto 1", 10, "kg", 15.99));
         ingresarProducto(new Producto("perfume","Producto 1", 10, "kg", 15.99));
         ingresarProducto(new Producto("perfume","Producto 1", 10, "kg", 15.99));
