@@ -1,5 +1,6 @@
 package Actividades;
 
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -9,12 +10,18 @@ import android.widget.SearchView;
 
 import com.example.sistema_inventario_ingeso.R;
 
+import java.util.ArrayList;
+
+import Dominio.Producto;
 import Logica.Sistema;
+import Logica.SistemaImpl;
+import Utils.AdaptadorProductos;
 
 public class ListaProductosActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
     Sistema sistema;
     SearchView buscadorVista;
     RecyclerView listaProductos;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,14 +29,13 @@ public class ListaProductosActivity extends AppCompatActivity implements SearchV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_productos);
 
-        sistema = (Sistema) getIntent().getSerializableExtra("sistema");
+        sistema = (SistemaImpl) getIntent().getSerializableExtra("sistema");
 
-        listaProductos = findViewById(R.id.productos);
+        listaProductos = findViewById(R.id.listaProductos);
         listaProductos.setLayoutManager(new LinearLayoutManager(this));
 
-        buscadorVista = findViewById(R.id.search);
-        buscadorVista.setOnQueryTextListener(this);
-
+        AdaptadorProductos adapter = new AdaptadorProductos((ArrayList<Producto>) sistema.getListaProducto());
+        listaProductos.setAdapter(adapter);
 
     }
 

@@ -1,11 +1,14 @@
 package Dominio;
 
-public class Producto {
+import java.io.Serializable;
+
+public class Producto implements Serializable {
     private int id;
     private String categoria, nombre,unidad;
-    private double cantidad,valor;
+    private int cantidad;
+    private double valor;
 
-    public Producto(String categoria, String nombre,double cantidad, String unidad, double valor) {
+    public Producto(String categoria, String nombre,int cantidad, String unidad, double valor) {
         this.categoria = categoria;
         this.nombre = nombre;
         this.unidad = unidad;
@@ -45,11 +48,11 @@ public class Producto {
         this.unidad = unidad;
     }
 
-    public double getCantidad() {
+    public int getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(double cantidad) {
+    public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
 

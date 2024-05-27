@@ -1,12 +1,13 @@
 package Logica;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import Dominio.MateriaPrima;
 import Dominio.Producto;
 
-public class SistemaImpl implements Sistema{
+public class SistemaImpl implements Sistema, Serializable {
     private final List<MateriaPrima> listaMateriaPrima;
     private final List<Producto> listaProducto;
 
@@ -87,15 +88,15 @@ public class SistemaImpl implements Sistema{
         listaProducto.remove(producto);
     }
     private void obtenerProductos(){
-        ingresarProducto(new Producto("perfume","Producto 1", 10.5, "kg", 15.99));
-        ingresarProducto(new Producto("perfume","Producto 1", 10.5, "kg", 15.99));
-        ingresarProducto(new Producto("perfume","Producto 1", 10.5, "kg", 15.99));
-        ingresarProducto(new Producto("perfume","Producto 1", 10.5, "kg", 15.99));
-        ingresarProducto(new Producto("perfume","Producto 1", 10.5, "kg", 15.99));
-        ingresarProducto(new Producto("perfume","Producto 1", 10.5, "kg", 15.99));
-        ingresarProducto(new Producto("perfume","Producto 1", 10.5, "kg", 15.99));
-        ingresarProducto(new Producto("perfume","Producto 1", 10.5, "kg", 15.99));
-        ingresarProducto(new Producto("perfume","Producto 1", 10.5, "kg", 15.99));
+        ingresarProducto(new Producto("perfume","Producto 1", 10, "kg", 15.99));
+        ingresarProducto(new Producto("perfume","Producto 1", 10, "kg", 15.99));
+        ingresarProducto(new Producto("perfume","Producto 1", 10, "kg", 15.99));
+        ingresarProducto(new Producto("perfume","Producto 1", 10, "kg", 15.99));
+        ingresarProducto(new Producto("perfume","Producto 1", 10, "kg", 15.99));
+        ingresarProducto(new Producto("perfume","Producto 1", 10, "kg", 15.99));
+        ingresarProducto(new Producto("perfume","Producto 1", 10, "kg", 15.99));
+        ingresarProducto(new Producto("perfume","Producto 1", 10, "kg", 15.99));
+        ingresarProducto(new Producto("perfume","Producto 1", 10, "kg", 15.99));
 
     }
 

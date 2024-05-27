@@ -34,7 +34,7 @@ public class IngresarProductoActivity extends AppCompatActivity {
         if (areAllFieldsFilled()) {
             String categoria = etProductCategory.getText().toString();
             String nombre= etProductName.getText().toString();
-            double cantidad = Double.parseDouble( etProductAmount.getText().toString());
+            int cantidad = Integer.parseInt( etProductAmount.getText().toString());
             String unidad = etProductUnidad.getText().toString();
             double valor = Double.parseDouble( etProductPrice.getText().toString());;
             Producto productoNuevo = new Producto(categoria,nombre,cantidad,unidad,valor);
