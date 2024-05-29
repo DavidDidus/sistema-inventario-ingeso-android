@@ -1,6 +1,8 @@
 package Dominio;
 
-public class MateriaPrima {
+import java.io.Serializable;
+
+public class MateriaPrima implements Serializable {
     private int id;
     private String nombre;
     private double cantidad;

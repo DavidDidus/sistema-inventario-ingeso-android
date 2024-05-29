@@ -1,14 +1,16 @@
 package Logica;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import Dominio.MateriaPrima;
 import Dominio.Producto;
 
-public class SistemaImpl implements Sistema{
+public class SistemaImpl implements Sistema, Serializable {
     private final List<MateriaPrima> listaMateriaPrima;
-    private final List<Producto> listaProducto;
+    private List<Producto> listaProducto;
+
 
     public SistemaImpl(){
         listaMateriaPrima = new ArrayList<>();
@@ -20,6 +22,23 @@ public class SistemaImpl implements Sistema{
     @Override
     public List<Producto> getListaProducto() {
         return listaProducto;
+    }
+
+    @Override
+    public boolean editarProducto(Producto producto) {
+       return true;
+
+    }
+
+    @Override
+    public Producto buscarProducto(String nombre) {
+
+        return null;
+    }
+
+    @Override
+    public void setListaProducto(ArrayList<Producto> productos) {
+        listaProducto = productos;
     }
 
     @Override
@@ -86,15 +105,15 @@ public class SistemaImpl implements Sistema{
         listaProducto.remove(producto);
     }
     private void obtenerProductos(){
-        ingresarProducto(new Producto("perfume","Producto 1", 10.5, "kg", 15.99));
-        ingresarProducto(new Producto("perfume","Producto 1", 10.5, "kg", 15.99));
-        ingresarProducto(new Producto("perfume","Producto 1", 10.5, "kg", 15.99));
-        ingresarProducto(new Producto("perfume","Producto 1", 10.5, "kg", 15.99));
-        ingresarProducto(new Producto("perfume","Producto 1", 10.5, "kg", 15.99));
-        ingresarProducto(new Producto("perfume","Producto 1", 10.5, "kg", 15.99));
-        ingresarProducto(new Producto("perfume","Producto 1", 10.5, "kg", 15.99));
-        ingresarProducto(new Producto("perfume","Producto 1", 10.5, "kg", 15.99));
-        ingresarProducto(new Producto("perfume","Producto 1", 10.5, "kg", 15.99));
+        ingresarProducto(new Producto("perfume"," 1", 10, "kg", 15.99));
+        ingresarProducto(new Producto("perfume","Producto 1", 10, "kg", 15.99));
+        ingresarProducto(new Producto("perfume","Producto 1", 10, "kg", 15.99));
+        ingresarProducto(new Producto("perfume","Producto 1", 10, "kg", 15.99));
+        ingresarProducto(new Producto("perfume","Producto 1", 10, "kg", 15.99));
+        ingresarProducto(new Producto("perfume","Producto 1", 10, "kg", 15.99));
+        ingresarProducto(new Producto("perfume","Producto 1", 10, "kg", 15.99));
+        ingresarProducto(new Producto("perfume","Producto 1", 10, "kg", 15.99));
+        ingresarProducto(new Producto("perfume","Producto 1", 10, "kg", 15.99));
 
     }
 

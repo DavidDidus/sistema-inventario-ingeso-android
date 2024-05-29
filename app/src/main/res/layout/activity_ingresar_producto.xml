@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <EditText
+        android:id="@+id/etProductPrice"
+        android:layout_width="408dp"
+        android:layout_height="51dp"
+        android:ems="10"
+        android:hint="Valor"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etProductAmount" />
+
+        <EditText
+            android:id="@+id/etProductAmount"
+            android:layout_width="408dp"
+            android:layout_height="51dp"
+            android:ems="10"
+            android:hint="Cantidad"
+            android:inputType="number"
+            app:layout_constraintBottom_toTopOf="@+id/etProductPrice"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etProductCategory" />
+
+    <EditText
+            android:id="@+id/etProductName"
+            android:layout_width="408dp"
+            android:layout_height="51dp"
+            android:layout_marginTop="27dp"
+            android:ems="10"
+            android:hint="Nombre"
+            android:inputType="text"
+            app:layout_constraintBottom_toTopOf="@+id/etProductCategory"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/etProductCategory"
+            android:layout_width="408dp"
+            android:layout_height="51dp"
+            android:ems="10"
+            android:hint="Categoria"
+            android:inputType="text"
+            app:layout_constraintBottom_toTopOf="@+id/etProductAmount"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etProductName" />
+
+    <Button
+        android:id="@+id/button"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="408dp"
+        android:layout_height="wrap_content"
+        android:background="#6A6161"
+        android:backgroundTint="#554F4F"
+        android:backgroundTintMode="add"
+        android:text="Ingresar"
+        android:textColorHighlight="#736D6D"
+        android:textColorLink="#6A6262"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="294dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

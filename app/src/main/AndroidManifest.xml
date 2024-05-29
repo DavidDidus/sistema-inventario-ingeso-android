@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,18 +14,45 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Sistemainventarioingeso"
         tools:targetApi="31">
+
         <activity
-            android:name="Logica.ListaMateriasPrimas"
-            android:exported="false" />
+            android:name="Actividades.IngresarProductoActivity"
+            android:exported="false"
+            android:parentActivityName="Actividades.ListaProductosActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="Actividades.ListaProductosActivity" />
+        </activity>
+
         <activity
-            android:name="Logica.ListaProductosActivity"
-            android:exported="false" />
+            android:name="Actividades.ListaMateriasPrimas"
+            android:parentActivityName="Logica.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="Logica.MainActivity" />
+        </activity>
+
+        <activity
+            android:name="Actividades.ListaProductosActivity"
+            android:parentActivityName="Logica.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="Logica.MainActivity" />
+        </activity>
+
+        <activity
+            android:name="Actividades.VerActivity"
+            android:parentActivityName="Actividades.ListaProductosActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="Actividades.ListaProductosActivity" />
+        </activity>
+
         <activity
             android:name="Logica.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

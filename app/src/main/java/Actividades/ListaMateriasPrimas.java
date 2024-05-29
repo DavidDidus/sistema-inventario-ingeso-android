@@ -1,4 +1,4 @@
-package Logica;
+package Actividades;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,14 +6,15 @@ import android.os.Bundle;
 
 import com.example.sistema_inventario_ingeso.R;
 
-public class ListaProductosActivity extends AppCompatActivity {
-    Sistema sistema;
+import Logica.Sistema;
 
+public class ListaMateriasPrimas extends AppCompatActivity {
+
+    Sistema sistema;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lista_productos);
+        setContentView(R.layout.activity_lista_materias_primas);
         sistema = (Sistema) getIntent().getSerializableExtra("sistema");
-
     }
 }
