@@ -16,5 +16,7 @@
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="@dimen/fab_margin"
         android:layout_marginBottom="16dp"
-        android:src="@android:drawable/ic_input_add" />
+        android:contentDescription="@string/app_name"
+        android:src="@android:drawable/ic_input_add"
+        android:visibility="visible" />
 </LinearLayout>

@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.sistema_inventario_ingeso.R;
-
 import java.io.Serializable;
 
 import Actividades.ListaMateriasPrimas;
@@ -26,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         sistema = new SistemaImpl();
+
         Toast.makeText(this, "sis", Toast.LENGTH_SHORT).show();
 
 
@@ -43,18 +43,19 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         intent.putExtra("sistema", (Serializable) sistema);
         startActivity(intent);
     }
+    @Override
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_principal,menu);
         return true;
     }
-    public boolean onOptionItemSelected(MenuItem item){
-        switch (item.getItemId()){
-            case 1:
-                nuevoRegistro();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        if (item.getItemId() == R.id.menuNuevo) {
+            nuevoRegistro();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
     }
     private void nuevoRegistro(){
