@@ -1,5 +1,6 @@
 package Actividades;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -20,7 +21,6 @@ public class VerActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ver_producto);
-
         etProductName = findViewById(R.id.etProductName);
         etProductCategory = findViewById(R.id.etProductCategory);
         etProductAmount = findViewById(R.id.etProductAmount);
@@ -39,5 +39,10 @@ public class VerActivity extends AppCompatActivity {
         etProductCategory.setEnabled(false);
         etProductAmount.setEnabled(false);
         etProductPrice.setEnabled(false);
+
+        etProductName.setTextColor(Color.rgb(0,0,0));
+        etProductCategory.setTextColor(Color.rgb(0,0,0));
+        etProductAmount.setTextColor(Color.rgb(0,0,0));
+        etProductPrice.setTextColor(Color.rgb(0,0,0));
     }
 }

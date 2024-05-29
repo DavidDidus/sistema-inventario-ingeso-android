@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -39,6 +42,24 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         Intent intent = new Intent(this, ListaMateriasPrimas.class);
         intent.putExtra("sistema", (Serializable) sistema);
         startActivity(intent);
+    }
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_principal,menu);
+        return true;
+    }
+    public boolean onOptionItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case 1:
+                nuevoRegistro();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+    private void nuevoRegistro(){
+        //Intent intent = new Intent(this,)
+        //startActivity(intent);
     }
 
 }

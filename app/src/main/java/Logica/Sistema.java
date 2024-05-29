@@ -7,6 +7,8 @@ import Dominio.*;
 
 public interface Sistema {
     public List<Producto> getListaProducto();
+    public boolean editarProducto(Producto producto);
+    public Producto buscarProducto(String nombre);
     public void setListaProducto(ArrayList<Producto> productos);
     public List<MateriaPrima> getListaMateriaPrima();
     public void ingresarMateriaPrima(MateriaPrima materiaPrima);

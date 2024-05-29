@@ -7,16 +7,15 @@
 
 
     <EditText
-            android:id="@+id/etProductPrice"
-            android:layout_width="408dp"
-            android:layout_height="51dp"
-            android:ems="10"
-            android:hint="Valor"
-            android:inputType="number"
-            app:layout_constraintBottom_toTopOf="@+id/etProductUnidad"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etProductAmount" />
+        android:id="@+id/etProductPrice"
+        android:layout_width="408dp"
+        android:layout_height="51dp"
+        android:ems="10"
+        android:hint="Valor"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etProductAmount" />
 
         <EditText
             android:id="@+id/etProductAmount"
@@ -30,19 +29,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etProductCategory" />
 
-        <EditText
-            android:id="@+id/etProductUnidad"
-            android:layout_width="408dp"
-            android:layout_height="51dp"
-            android:ems="10"
-            android:hint="Unidad"
-            android:inputType="text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.555"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etProductPrice" />
-
-        <EditText
+    <EditText
             android:id="@+id/etProductName"
             android:layout_width="408dp"
             android:layout_height="51dp"
@@ -67,21 +54,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etProductName" />
 
-        <Button
-            android:id="@+id/button"
-            style="@style/Widget.AppCompat.Button"
-            android:layout_width="408dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:background="#6A6161"
-            android:backgroundTint="#554F4F"
-            android:backgroundTintMode="add"
-            android:text="Ingresar"
-            android:textColorHighlight="#736D6D"
-            android:textColorLink="#6A6262"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etProductUnidad" />
+    <Button
+        android:id="@+id/button"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="408dp"
+        android:layout_height="wrap_content"
+        android:background="#6A6161"
+        android:backgroundTint="#554F4F"
+        android:backgroundTintMode="add"
+        android:text="Ingresar"
+        android:textColorHighlight="#736D6D"
+        android:textColorLink="#6A6262"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="294dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

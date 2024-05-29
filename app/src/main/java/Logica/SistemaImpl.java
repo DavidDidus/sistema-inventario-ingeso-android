@@ -25,6 +25,18 @@ public class SistemaImpl implements Sistema, Serializable {
     }
 
     @Override
+    public boolean editarProducto(Producto producto) {
+       return true;
+
+    }
+
+    @Override
+    public Producto buscarProducto(String nombre) {
+
+        return null;
+    }
+
+    @Override
     public void setListaProducto(ArrayList<Producto> productos) {
         listaProducto = productos;
     }
