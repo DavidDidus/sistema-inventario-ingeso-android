@@ -1,6 +1,5 @@
 package Utils;
 
-import Actividades.IngresarProductoActivity;
 import Actividades.VerActivity;
 import Dominio.Producto;
 
@@ -42,7 +41,6 @@ public class AdaptadorProductos extends RecyclerView.Adapter<AdaptadorProductos.
         holder.viewNombre.setText(listaProductos.get(position).getNombre());
         holder.viewCantidad.setText(String.valueOf(listaProductos.get(position).getCantidad()) + " unidades");
         holder.viewCategoria.setText(listaProductos.get(position).getCategoria());
-        holder.viewValor.setText("$" + String.valueOf(listaProductos.get(position).getValor()));
 
     }
 
@@ -53,14 +51,13 @@ public class AdaptadorProductos extends RecyclerView.Adapter<AdaptadorProductos.
 
     public static class ProductoViewHolder extends RecyclerView.ViewHolder {
 
-        TextView viewNombre,viewCantidad,viewCategoria,viewUnidad,viewValor;
+        TextView viewNombre,viewCantidad,viewCategoria;
 
         public ProductoViewHolder(@NonNull View itemView) {
             super(itemView);
             viewNombre = itemView.findViewById(R.id.viewNombre);
             viewCantidad = itemView.findViewById(R.id.viewCantidad);
             viewCategoria = itemView.findViewById(R.id.viewCategoria);
-            viewValor = itemView.findViewById(R.id.viewValor);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

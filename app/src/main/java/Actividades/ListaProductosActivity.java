@@ -5,10 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.SearchView;
 
 import com.example.sistema_inventario_ingeso.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -18,9 +21,11 @@ import Logica.SistemaImpl;
 import Utils.AdaptadorProductos;
 
 public class ListaProductosActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
-    Sistema sistema;
-    SearchView buscadorVista;
-    RecyclerView listaProductos;
+    private Sistema sistema;
+    private SearchView buscadorVista;
+    private RecyclerView listaProductos;
+    private FloatingActionButton fabAdd;
+    private ListaProductosActivity instancia = this;
 
 
     @Override
@@ -29,7 +34,7 @@ public class ListaProductosActivity extends AppCompatActivity implements SearchV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_productos);
 
-        sistema = (SistemaImpl) getIntent().getSerializableExtra("sistema");
+        sistema = SistemaImpl.getInstance();
 
         listaProductos = findViewById(R.id.listaProductos);
         listaProductos.setLayoutManager(new LinearLayoutManager(this));
@@ -37,10 +42,22 @@ public class ListaProductosActivity extends AppCompatActivity implements SearchV
         AdaptadorProductos adapter = new AdaptadorProductos((ArrayList<Producto>) sistema.getListaProducto());
         listaProductos.setAdapter(adapter);
 
+        fabAdd = findViewById(R.id.fabAdd);
+
+        fabAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(instancia, NuevoProductoActivity.class);
+                startActivity(intent);
+
+            }
+        });
     }
+
 
     @Override
     public boolean onQueryTextSubmit(String query) {
+
 
         return false;
     }

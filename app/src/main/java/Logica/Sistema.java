@@ -6,6 +6,7 @@ import java.util.List;
 import Dominio.*;
 
 public interface Sistema {
+
     public List<Producto> getListaProducto();
     public boolean editarProducto(Producto producto);
     public Producto buscarProducto(String nombre);

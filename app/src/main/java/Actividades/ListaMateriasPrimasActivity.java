@@ -8,7 +8,7 @@ import com.example.sistema_inventario_ingeso.R;
 
 import Logica.Sistema;
 
-public class ListaMateriasPrimas extends AppCompatActivity {
+public class ListaMateriasPrimasActivity extends AppCompatActivity {
 
     Sistema sistema;
     @Override

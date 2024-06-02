@@ -11,14 +11,21 @@ public class SistemaImpl implements Sistema, Serializable {
     private final List<MateriaPrima> listaMateriaPrima;
     private List<Producto> listaProducto;
 
+    private static Sistema instance;
 
-    public SistemaImpl(){
+    private SistemaImpl() {
         listaMateriaPrima = new ArrayList<>();
         listaProducto = new ArrayList<>();
         obtenerMateriasPrimas();
         obtenerProductos();
     }
-
+    // Método estático para obtener la única instancia de la clase
+    public static synchronized SistemaImpl getInstance() {
+        if (instance == null) {
+            instance = new SistemaImpl();
+        }
+        return (SistemaImpl) instance;
+    }
     @Override
     public List<Producto> getListaProducto() {
         return listaProducto;
@@ -26,13 +33,18 @@ public class SistemaImpl implements Sistema, Serializable {
 
     @Override
     public boolean editarProducto(Producto producto) {
-       return true;
+        int posProducto = busquedaBinariaProductos(producto.getId());
+        if (posProducto != -1) {
+            // Actualizar el producto en la lista
+            listaProducto.set(posProducto, producto);
+            return true;
+        }
+        return false;
 
     }
 
     @Override
     public Producto buscarProducto(String nombre) {
-
         return null;
     }
 

@@ -8,12 +8,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.sistema_inventario_ingeso.R;
 import java.io.Serializable;
 
-import Actividades.ListaMateriasPrimas;
+import Actividades.ListaMateriasPrimasActivity;
 import Actividades.ListaProductosActivity;
 
 
@@ -24,23 +23,17 @@ public class MainActivity extends AppCompatActivity implements Serializable {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        sistema = new SistemaImpl();
-
-        Toast.makeText(this, "sis", Toast.LENGTH_SHORT).show();
-
-
+        sistema = SistemaImpl.getInstance();
     }
     public void pressProductButton(View v){
 
         Intent intent = new Intent(this, ListaProductosActivity.class);
-        intent.putExtra("sistema", (Serializable) sistema);
         startActivity(intent);
 
 
     }
     public void pressMateriasButton(View v){
-        Intent intent = new Intent(this, ListaMateriasPrimas.class);
-        intent.putExtra("sistema", (Serializable) sistema);
+        Intent intent = new Intent(this, ListaMateriasPrimasActivity.class);
         startActivity(intent);
     }
     @Override
@@ -60,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements Serializable {
     }
     private void nuevoRegistro(){
         //Intent intent = new Intent(this,)
-        //startActivity(intent);
+        //startActivity(intent,);
     }
 
 }
