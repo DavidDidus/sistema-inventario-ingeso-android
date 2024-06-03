@@ -19,5 +19,4 @@ public interface Sistema {
     public void eliminarMateriaPrima(MateriaPrima materiaPrima);
     public void eliminarProducto(Producto producto);
 
-
 }

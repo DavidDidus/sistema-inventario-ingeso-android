@@ -19,13 +19,17 @@ import java.util.ArrayList;
 
 
 public class AdaptadorProductos extends RecyclerView.Adapter<AdaptadorProductos.ProductoViewHolder> {
-    static ArrayList<Producto> listaProductos;
+    public ArrayList<Producto> listaProductos;
     ArrayList<Producto> listaOriginal;
 
     public AdaptadorProductos(ArrayList<Producto> listaProductos) {
         this.listaProductos = listaProductos;
         listaOriginal = new ArrayList<>();
         listaOriginal.addAll(listaProductos);
+    }
+    // Implementa el método setProductos
+    public void setProductos(ArrayList<Producto> productos) {
+        this.listaProductos = productos;
     }
 
 
@@ -49,7 +53,7 @@ public class AdaptadorProductos extends RecyclerView.Adapter<AdaptadorProductos.
         return listaProductos.size();
     }
 
-    public static class ProductoViewHolder extends RecyclerView.ViewHolder {
+    public class ProductoViewHolder extends RecyclerView.ViewHolder {
 
         TextView viewNombre,viewCantidad,viewCategoria;
 

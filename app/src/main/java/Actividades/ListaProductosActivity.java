@@ -7,8 +7,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.example.sistema_inventario_ingeso.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -26,6 +28,7 @@ public class ListaProductosActivity extends AppCompatActivity implements SearchV
     private RecyclerView listaProductos;
     private FloatingActionButton fabAdd;
     private ListaProductosActivity instancia = this;
+    private AdaptadorProductos adapter;
 
 
     @Override
@@ -53,12 +56,22 @@ public class ListaProductosActivity extends AppCompatActivity implements SearchV
             }
         });
     }
+    @Override
+    protected void onRestart() {
+        super.onRestart();
 
+        Toast.makeText(instancia, "onResume", Toast.LENGTH_SHORT).show();
+        if (adapter != null) {
+            adapter.setProductos((ArrayList<Producto>) sistema.getListaProducto());
+        } else {
+            // Log de advertencia o mensaje de depuración para identificar el problema
+            Log.e("ListaProductosActivity", "El adaptador es nulo en onResume()");
+        }
+
+    }
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-
-
         return false;
     }
 

@@ -64,35 +64,46 @@ public class EditarProductoActivity extends AppCompatActivity{
 
 
     }
-    public void pressEdit(View v){
-        String nuevoNombre = etProductName.getText().toString().trim();
-        String nuevaCategoria = etProductCategory.getText().toString().trim();
-        int nuevaCantidad;
+    public void pressEdit(View v) {
+        String nuevoNombre = etProductName.getText().toString();
+        String nuevaCategoria = etProductCategory.getText().toString();
+        int nuevaCantidad ;
 
         try {
             nuevaCantidad = Integer.parseInt(etProductAmount.getText().toString().trim());
         } catch (NumberFormatException e) {
-            Toast.makeText(this, "Cantidad inválida", Toast.LENGTH_SHORT).show();
-            return;
+            nuevaCantidad = producto.getCantidad();
         }
 
-        if (!nuevoNombre.isEmpty()) {
-            producto.setNombre(nuevoNombre);
+        // Verificar si el nuevo nombre está vacío
+        if (nuevoNombre.isEmpty()) {
+            // Si el nuevo nombre está vacío, se asigna el nombre original del producto
+            nuevoNombre = producto.getNombre();
         }
-        if (!nuevaCategoria.isEmpty()) {
-            producto.setCategoria(nuevaCategoria);
+        // Verificar si la nueva categoría está vacía
+        if (nuevaCategoria.isEmpty()) {
+            // Si la nueva categoría está vacía, se asigna la categoría original del producto
+            nuevaCategoria = producto.getCategoria();
         }
+
+        // Actualizar los datos del producto
+        producto.setNombre(nuevoNombre);
+        producto.setCategoria(nuevaCategoria);
         producto.setCantidad(nuevaCantidad);
 
+        // Intentar editar el producto en el sistema
         boolean resultado = sistema.editarProducto(producto);
 
         if (resultado) {
+            // Mostrar un mensaje de éxito
             Toast.makeText(this, "Producto actualizado correctamente", Toast.LENGTH_SHORT).show();
-            etProductName.setText(producto.getNombre());
-            etProductCategory.setText(producto.getCategoria());
-            etProductAmount.setText(producto.getCantidad());
-            finish(); // Cierra la actividad después de la edición exitosa
+            // Regresar a la actividad ListaProductosActivity
+            Intent intent = new Intent(this, ListaProductosActivity.class);
+            startActivity(intent);
+            // Finalizar esta actividad
+            finish();
         } else {
+            // Mostrar un mensaje de error si no se pudo editar el producto
             Toast.makeText(this, "Error al actualizar el producto", Toast.LENGTH_SHORT).show();
         }
     }
