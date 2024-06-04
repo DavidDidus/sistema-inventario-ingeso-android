@@ -4,16 +4,13 @@ import java.io.Serializable;
 
 public class Producto implements Serializable {
     private int id;
-    private String categoria, nombre,unidad;
+    private String categoria, nombre;
     private int cantidad;
-    private double valor;
 
-    public Producto(String categoria, String nombre,int cantidad, String unidad, double valor) {
+    public Producto(String categoria, String nombre,int cantidad) {
         this.categoria = categoria;
         this.nombre = nombre;
-        this.unidad = unidad;
         this.cantidad = cantidad;
-        this.valor = valor;
     }
 
     public int getId() {
@@ -40,13 +37,6 @@ public class Producto implements Serializable {
         this.nombre = nombre;
     }
 
-    public String getUnidad() {
-        return unidad;
-    }
-
-    public void setUnidad(String unidad) {
-        this.unidad = unidad;
-    }
 
     public int getCantidad() {
         return cantidad;
@@ -56,11 +46,4 @@ public class Producto implements Serializable {
         this.cantidad = cantidad;
     }
 
-    public double getValor() {
-        return valor;
-    }
-
-    public void setValor(double valor) {
-        this.valor = valor;
-    }
 }

@@ -113,23 +113,24 @@ public class SistemaImpl implements Sistema, Serializable {
     }
 
     @Override
-    public void eliminarProducto(Producto producto) {
-        listaProducto.remove(producto);
+    public boolean eliminarProducto(Producto producto) {
+        return listaProducto.remove(producto);
     }
     private void obtenerProductos(){
-        ingresarProducto(new Producto("perfume"," 1", 10, "kg", 15.99));
-        ingresarProducto(new Producto("perfume","Producto 1", 10, "kg", 15.99));
-        ingresarProducto(new Producto("perfume","Producto 1", 10, "kg", 15.99));
-        ingresarProducto(new Producto("perfume","Producto 1", 10, "kg", 15.99));
-        ingresarProducto(new Producto("perfume","Producto 1", 10, "kg", 15.99));
-        ingresarProducto(new Producto("perfume","Producto 1", 10, "kg", 15.99));
-        ingresarProducto(new Producto("perfume","Producto 1", 10, "kg", 15.99));
-        ingresarProducto(new Producto("perfume","Producto 1", 10, "kg", 15.99));
-        ingresarProducto(new Producto("perfume","Producto 1", 10, "kg", 15.99));
+        ingresarProducto(new Producto("perfume"," 1", 10));
+        ingresarProducto(new Producto("perfume","Producto 1", 10));
+        ingresarProducto(new Producto("perfume","Producto 1", 10));
+        ingresarProducto(new Producto("perfume","Producto 1", 10));
+        ingresarProducto(new Producto("perfume","Producto 1", 10));
+        ingresarProducto(new Producto("perfume","Producto 1", 10));
+        ingresarProducto(new Producto("perfume","Producto 1", 10));
+        ingresarProducto(new Producto("perfume","Producto 1", 10));
+        ingresarProducto(new Producto("perfume","Producto 1", 10));
 
     }
 
     private void obtenerMateriasPrimas(){
+        ingresarMateriaPrima(new MateriaPrima("azufre",2,"mg"));
 
     }
 

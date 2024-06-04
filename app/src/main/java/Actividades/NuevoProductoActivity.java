@@ -41,7 +41,7 @@ public class NuevoProductoActivity extends AppCompatActivity {
 
             // Verificar si el nombre del producto ya existe
             if (isProductNameUnique(nombre)) {
-                Producto productoNuevo = new Producto(categoria, nombre, cantidad, " ", 0);
+                Producto productoNuevo = new Producto(categoria, nombre, cantidad);
                 sistema.ingresarProducto(productoNuevo);
                 Toast.makeText(NuevoProductoActivity.this, "Producto " + nombre + " ingresado.", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, ListaProductosActivity.class);
