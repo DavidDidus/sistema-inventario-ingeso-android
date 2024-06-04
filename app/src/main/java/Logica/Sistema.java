@@ -17,6 +17,6 @@ public interface Sistema {
     public int busquedaBinariaMateriasPrimas(int id);
     public int busquedaBinariaProductos(int id);
     public void eliminarMateriaPrima(MateriaPrima materiaPrima);
-    public void eliminarProducto(Producto producto);
+    public boolean eliminarProducto(Producto producto);
 
 }

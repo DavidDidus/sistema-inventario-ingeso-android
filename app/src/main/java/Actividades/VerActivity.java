@@ -1,5 +1,6 @@
 package Actividades;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sistema_inventario_ingeso.R;
@@ -22,7 +24,7 @@ public class VerActivity extends AppCompatActivity {
     private Producto producto;
     private EditText etProductName, etProductCategory, etProductAmount;
     private VerActivity instancia = this;
-    private FloatingActionButton fabEdit;
+    private FloatingActionButton fabEdit,fabDelete;
     private Button guardarButton;
     private Sistema sistema;
 
@@ -42,6 +44,7 @@ public class VerActivity extends AppCompatActivity {
         etProductCategory = findViewById(R.id.etProductCategory);
         etProductAmount = findViewById(R.id.etProductAmount);
         fabEdit = findViewById(R.id.fabEdit);
+        fabDelete = findViewById(R.id.fabDelete);
         guardarButton = findViewById(R.id.EditButton);
     }
 
@@ -83,5 +86,43 @@ public class VerActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        fabDelete.setOnClickListener(new View.OnClickListener() { // Añade el listener para fabDelete
+            @Override
+            public void onClick(View view) {
+                confirmDelete();
+            }
+        });
+
+    }
+    public void confirmDelete() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Confirmar eliminación");
+        builder.setMessage("¿Estás seguro de que deseas eliminar este producto?");
+
+        builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Lógica para eliminar el producto
+                boolean resultado = sistema.eliminarProducto(producto);
+                if (resultado) {
+                    Toast.makeText(VerActivity.this, "Producto eliminado correctamente", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(VerActivity.this, ListaProductosActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Toast.makeText(VerActivity.this, "Error al eliminar el producto", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }
