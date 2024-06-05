@@ -16,6 +16,7 @@ import com.example.sistema_inventario_ingeso.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import Dominio.Producto;
 import Logica.Sistema;
@@ -42,8 +43,11 @@ public class ListaProductosActivity extends AppCompatActivity implements SearchV
         listaProductos = findViewById(R.id.listaProductos);
         listaProductos.setLayoutManager(new LinearLayoutManager(this));
 
-        AdaptadorProductos adapter = new AdaptadorProductos((ArrayList<Producto>) sistema.getListaProducto());
+        adapter = new AdaptadorProductos((ArrayList<Producto>) sistema.getListaProducto());
         listaProductos.setAdapter(adapter);
+
+        buscadorVista = findViewById(R.id.buscador);
+        buscadorVista.setOnQueryTextListener(this);
 
         fabAdd = findViewById(R.id.fabAdd);
 
@@ -77,6 +81,8 @@ public class ListaProductosActivity extends AppCompatActivity implements SearchV
 
     @Override
     public boolean onQueryTextChange(String newText) {
+        adapter.filtrar(newText);
+
         return false;
     }
 }

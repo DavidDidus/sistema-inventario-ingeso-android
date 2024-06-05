@@ -5,6 +5,7 @@ import Dominio.Producto;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.sistema_inventario_ingeso.R;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class AdaptadorProductos extends RecyclerView.Adapter<AdaptadorProductos.ProductoViewHolder> {
@@ -26,6 +29,28 @@ public class AdaptadorProductos extends RecyclerView.Adapter<AdaptadorProductos.
         this.listaProductos = listaProductos;
         listaOriginal = new ArrayList<>();
         listaOriginal.addAll(listaProductos);
+    }
+    public void filtrar(String buscado){
+        int longitud = buscado.length();
+        if(longitud == 0){
+            listaProductos.clear();
+            listaProductos.addAll(listaOriginal);
+        }else{
+            if(Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N){
+                List<Producto> coleccion = listaProductos.stream().filter
+                        (i -> i.getNombre().toLowerCase().contains(buscado.toLowerCase())).
+                        collect(Collectors.toList());
+                listaProductos.clear();;
+                listaProductos.addAll(coleccion);
+            }else{
+                for(Producto producto : listaProductos){
+                    if(producto.getNombre().toLowerCase().contains(buscado.toLowerCase())){
+                        listaProductos.add(producto);
+                    }
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
     // Implementa el método setProductos
     public void setProductos(ArrayList<Producto> productos) {
