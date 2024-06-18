@@ -7,24 +7,24 @@ import java.util.List;
 import Dominio.MateriaPrima;
 import Dominio.Producto;
 
-public class SistemaImpl implements Sistema, Serializable {
+public class SistemaProductosImpl implements SistemaProductos, Serializable {
     private final List<MateriaPrima> listaMateriaPrima;
     private List<Producto> listaProducto;
 
-    private static Sistema instance;
+    private static SistemaProductos instance;
 
-    private SistemaImpl() {
+    private SistemaProductosImpl() {
         listaMateriaPrima = new ArrayList<>();
         listaProducto = new ArrayList<>();
         obtenerMateriasPrimas();
         obtenerProductos();
     }
     // Método estático para obtener la única instancia de la clase
-    public static synchronized SistemaImpl getInstance() {
+    public static synchronized SistemaProductosImpl getInstance() {
         if (instance == null) {
-            instance = new SistemaImpl();
+            instance = new SistemaProductosImpl();
         }
-        return (SistemaImpl) instance;
+        return (SistemaProductosImpl) instance;
     }
     @Override
     public List<Producto> getListaProducto() {
@@ -44,21 +44,6 @@ public class SistemaImpl implements Sistema, Serializable {
     }
 
     @Override
-    public Producto buscarProducto(String nombre) {
-        return null;
-    }
-
-    @Override
-    public void setListaProducto(ArrayList<Producto> productos) {
-        listaProducto = productos;
-    }
-
-    @Override
-    public List<MateriaPrima> getListaMateriaPrima() {
-        return listaMateriaPrima;
-    }
-
-    @Override
     public void ingresarMateriaPrima(MateriaPrima materiaPrima) {
         materiaPrima.setId(listaMateriaPrima.size());
         listaMateriaPrima.add(materiaPrima);
@@ -68,25 +53,6 @@ public class SistemaImpl implements Sistema, Serializable {
     public void ingresarProducto(Producto producto) {
         producto.setId(listaProducto.size());
         listaProducto.add(producto);
-    }
-
-    @Override
-    public int busquedaBinariaMateriasPrimas(int id) {
-        int posIzq = 0;
-        int posDer = listaMateriaPrima.size() - 1;
-
-        while (posIzq <= posDer) {
-            int posMid = posIzq + (posDer - posIzq) / 2;
-
-            if (id == listaMateriaPrima.get(posMid).getId()) {
-                return posMid;
-            } else if (id < listaMateriaPrima.get(posMid).getId()) {
-                posDer = posMid - 1;
-            } else {
-                posIzq = posMid + 1;
-            }
-        }
-        return -1;
     }
 
     @Override

@@ -13,15 +13,17 @@ import com.example.sistema_inventario_ingeso.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import Dominio.Producto;
-import Logica.Sistema;
-import Logica.SistemaImpl;
+import Logica.SistemaFacade;
+import Logica.SistemaFacadeImpl;
+import Logica.SistemaProductos;
+import Logica.SistemaProductosImpl;
 
 public class EditarProductoActivity extends AppCompatActivity{
 
     private EditText etProductName, etProductCategory,etProductAmount;
     private FloatingActionButton fabEdit;
     private Producto producto;
-    private Sistema sistema;
+    private SistemaFacade sistema;
     private Button guardarButton;
 
     @Override
@@ -33,7 +35,7 @@ public class EditarProductoActivity extends AppCompatActivity{
         etProductCategory = findViewById(R.id.etProductCategory);
         etProductAmount = findViewById(R.id.etProductAmount);
 
-        sistema = SistemaImpl.getInstance();
+        sistema = SistemaFacadeImpl.getInstancia();
 
         fabEdit = findViewById(R.id.fabEdit);
         fabEdit.setVisibility(View.INVISIBLE);

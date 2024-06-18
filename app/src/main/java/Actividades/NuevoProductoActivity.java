@@ -11,22 +11,21 @@ import android.widget.Toast;
 import com.example.sistema_inventario_ingeso.R;
 
 import Dominio.Producto;
-import Logica.Sistema;
-import Logica.SistemaImpl;
-
+import Logica.SistemaFacade;
+import Logica.SistemaFacadeImpl;
 public class NuevoProductoActivity extends AppCompatActivity {
 
     private EditText etProductName,etProductCategory,etProductUnidad,
                      etProductPrice,etProductAmount;
 
 
-    Sistema sistema;
+    private SistemaFacade sistema;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ingresar_producto);
 
-        sistema = SistemaImpl.getInstance();
+        sistema = SistemaFacadeImpl.getInstancia();
 
         etProductName = findViewById(R.id.etProductName);
         etProductCategory = findViewById(R.id.etProductCategory);
