@@ -7,7 +7,7 @@ import Dominio.MateriaPrima;
 import Dominio.Producto;
 
 public class SistemaFacadeImpl implements SistemaFacade{
-    private SistemaFacade instancia;
+    private static SistemaFacade instancia;
     private SistemaMateriaPrima materiasPrimas;
     private SistemaProductos productos;
     private SistemaFacadeImpl(){
