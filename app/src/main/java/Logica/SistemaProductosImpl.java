@@ -80,6 +80,15 @@ public class SistemaProductosImpl implements SistemaProductos, Serializable {
         }
         return -1;
     }
+    @Override
+    public int busquedaLinealProductos(String nombre) {
+        for (int i = 0; i < listaProducto.size(); i++) {
+            if (nombre.equalsIgnoreCase(listaProducto.get(i).getNombre())) {
+                return i; // Se ha encontrado el producto
+            }
+        }
+        return -1; // El producto no se encontró
+    }
 
     @Override
     public void eliminarMateriaPrima(MateriaPrima materiaPrima) {

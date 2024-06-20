@@ -8,6 +8,7 @@ public interface SistemaFacade {
     public boolean editarProducto(Producto producto);
     public void ingresarProducto(Producto producto);
     public int busquedaBinariaProductos(int id);
+    public int busquedaLinealProductos(String nombre);
 
     public boolean eliminarProducto(Producto producto);
 }

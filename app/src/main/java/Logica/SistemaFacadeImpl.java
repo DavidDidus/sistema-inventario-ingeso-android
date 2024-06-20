@@ -21,6 +21,7 @@ public class SistemaFacadeImpl implements SistemaFacade{
         return instancia;
     }
 
+
     @Override
     public List<Producto> getListaProducto() {
         return productos.getListaProducto();
@@ -39,6 +40,11 @@ public class SistemaFacadeImpl implements SistemaFacade{
     @Override
     public int busquedaBinariaProductos(int id) {
         return productos.busquedaBinariaProductos(id);
+    }
+
+    @Override
+    public int busquedaLinealProductos(String nombre) {
+        return productos.busquedaLinealProductos(nombre);
     }
 
 

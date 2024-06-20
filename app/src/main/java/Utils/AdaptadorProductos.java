@@ -74,6 +74,7 @@ public class AdaptadorProductos extends RecyclerView.Adapter<AdaptadorProductos.
         holder.viewCantidad.setText(String.valueOf(listaProductos.get(position).getCantidad()) + " unidades");
         holder.viewCategoria.setText(listaProductos.get(position).getCategoria());
 
+
     }
 
     @Override
@@ -96,7 +97,9 @@ public class AdaptadorProductos extends RecyclerView.Adapter<AdaptadorProductos.
                 public void onClick(View v) {
                     Context context = v.getContext();
                     Intent intent = new Intent(context, VerActivity.class);
+                    System.out.println(getAdapterPosition());
                     intent.putExtra("datos", listaProductos.get(getAdapterPosition()));
+                    System.out.println(listaProductos.get(getAdapterPosition()).getNombre());
                     context.startActivity(intent);
                 }
             });
