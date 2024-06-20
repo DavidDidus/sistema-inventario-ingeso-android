@@ -117,15 +117,12 @@ public class SistemaImpl implements Sistema, Serializable {
         return listaProducto.remove(producto);
     }
     private void obtenerProductos(){
-        ingresarProducto(new Producto("perfume"," 1", 10));
-        ingresarProducto(new Producto("perfume","Producto 1", 10));
-        ingresarProducto(new Producto("perfume","Producto 1", 10));
-        ingresarProducto(new Producto("perfume","Producto 1", 10));
-        ingresarProducto(new Producto("perfume","Producto 1", 10));
-        ingresarProducto(new Producto("perfume","Producto 1", 10));
-        ingresarProducto(new Producto("perfume","Producto 1", 10));
-        ingresarProducto(new Producto("perfume","Producto 1", 10));
-        ingresarProducto(new Producto("perfume","Producto 1", 10));
+        ingresarProducto(new Producto("Linea capilar","Serum crecimiento del cabello", 10));
+        ingresarProducto(new Producto("Linea capilar","Shampoo solido romero", 10));
+        ingresarProducto(new Producto("Linea facial","Jabon solido de arroz", 10));
+        ingresarProducto(new Producto("Linea corporal","Fragancias coporales", 10));
+        ingresarProducto(new Producto("Cuidado personal","Desodorante natural en pasta", 10));
+        ingresarProducto(new Producto("Aromaterapia","Petit balm", 10));
 
     }
 

@@ -26,32 +26,35 @@ public class AdaptadorProductos extends RecyclerView.Adapter<AdaptadorProductos.
     ArrayList<Producto> listaOriginal;
 
     public AdaptadorProductos(ArrayList<Producto> listaProductos) {
-        this.listaProductos = listaProductos;
-        listaOriginal = new ArrayList<>();
-        listaOriginal.addAll(listaProductos);
+        this.listaProductos = new ArrayList<>(listaProductos);
+        this.listaOriginal = new ArrayList<>(listaProductos);
     }
-    public void filtrar(String buscado){
+    public void filtrar(String buscado) {
         int longitud = buscado.length();
-        if(longitud == 0){
+        if (longitud == 0) {
             listaProductos.clear();
             listaProductos.addAll(listaOriginal);
-        }else{
-            if(Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N){
-                List<Producto> coleccion = listaProductos.stream().filter
-                        (i -> i.getNombre().toLowerCase().contains(buscado.toLowerCase())).
-                        collect(Collectors.toList());
-                listaProductos.clear();;
-                listaProductos.addAll(coleccion);
-            }else{
-                for(Producto producto : listaProductos){
-                    if(producto.getNombre().toLowerCase().contains(buscado.toLowerCase())){
-                        listaProductos.add(producto);
+        } else {
+            List<Producto> coleccion;
+            if (Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                coleccion = listaOriginal.stream()
+                        .filter(i -> i.getNombre().toLowerCase().contains(buscado.toLowerCase()))
+                        .collect(Collectors.toList());
+            } else {
+                coleccion = new ArrayList<>();
+                for (Producto producto : listaOriginal) {
+                    if (producto.getNombre().toLowerCase().contains(buscado.toLowerCase())) {
+                        coleccion.add(producto);
                     }
                 }
             }
+            listaProductos.clear();
+            listaProductos.addAll(coleccion);
         }
         notifyDataSetChanged();
+
     }
+
     // Implementa el método setProductos
     public void setProductos(ArrayList<Producto> productos) {
         this.listaProductos = productos;
