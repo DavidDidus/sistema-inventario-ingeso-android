@@ -5,13 +5,16 @@ import java.util.List;
 
 import Dominio.*;
 
-public interface SistemaProductos {
+public interface Sistema {
 
     public List<Producto> getListaProducto();
     public boolean editarProducto(Producto producto);
-
+    public Producto buscarProducto(String nombre);
+    public void setListaProducto(ArrayList<Producto> productos);
+    public List<MateriaPrima> getListaMateriaPrima();
     public void ingresarMateriaPrima(MateriaPrima materiaPrima);
     public void ingresarProducto(Producto producto);
+    public int busquedaBinariaMateriasPrimas(int id);
     public int busquedaBinariaProductos(int id);
     public void eliminarMateriaPrima(MateriaPrima materiaPrima);
     public boolean eliminarProducto(Producto producto);

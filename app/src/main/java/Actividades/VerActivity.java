@@ -16,9 +16,8 @@ import com.example.sistema_inventario_ingeso.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import Dominio.Producto;
-import Logica.SistemaFacade;
-import Logica.SistemaFacadeImpl;
-
+import Logica.Sistema;
+import Logica.SistemaImpl;
 
 public class VerActivity extends AppCompatActivity {
 
@@ -27,13 +26,13 @@ public class VerActivity extends AppCompatActivity {
     private VerActivity instancia = this;
     private FloatingActionButton fabEdit,fabDelete;
     private Button guardarButton;
-    private SistemaFacade sistema;
+    private Sistema sistema;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ver_producto);
-        sistema = SistemaFacadeImpl.getInstancia();
+        sistema = SistemaImpl.getInstance();
         initViews();
         setupInitialData();
         setupListeners();

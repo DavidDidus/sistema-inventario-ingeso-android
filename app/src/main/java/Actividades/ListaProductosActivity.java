@@ -16,14 +16,15 @@ import com.example.sistema_inventario_ingeso.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import Dominio.Producto;
-import Logica.SistemaFacade;
-import Logica.SistemaFacadeImpl;
+import Logica.Sistema;
+import Logica.SistemaImpl;
 import Utils.AdaptadorProductos;
 
 public class ListaProductosActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
-    private SistemaFacade sistema;
+    private Sistema sistema;
     private SearchView buscadorVista;
     private RecyclerView listaProductos;
     private FloatingActionButton fabAdd;
@@ -37,7 +38,7 @@ public class ListaProductosActivity extends AppCompatActivity implements SearchV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_productos);
 
-        sistema = SistemaFacadeImpl.getInstancia();
+        sistema = SistemaImpl.getInstance();
 
         listaProductos = findViewById(R.id.listaProductos);
         listaProductos.setLayoutManager(new LinearLayoutManager(this));

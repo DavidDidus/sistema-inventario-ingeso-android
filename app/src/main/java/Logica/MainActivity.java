@@ -18,12 +18,12 @@ import Actividades.ListaProductosActivity;
 
 public class MainActivity extends AppCompatActivity implements Serializable {
 
-    SistemaProductos sistemaProductos;
+    Sistema sistema;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        sistemaProductos = SistemaProductosImpl.getInstance();
+        sistema = SistemaImpl.getInstance();
     }
     public void pressProductButton(View v){
 
