@@ -16,15 +16,12 @@ import Dominio.MateriaPrima;
 import Dominio.Producto;
 
 public class SistemaProductosImpl implements SistemaProductos, Serializable {
-    private final List<MateriaPrima> listaMateriaPrima;
     private List<Producto> listaProducto;
 
     private static SistemaProductos instance;
 
     private SistemaProductosImpl() {
-        listaMateriaPrima = new ArrayList<>();
         listaProducto = new ArrayList<>();
-        obtenerMateriasPrimas();
         obtenerProductos();
     }
     // Método estático para obtener la única instancia de la clase
@@ -51,11 +48,6 @@ public class SistemaProductosImpl implements SistemaProductos, Serializable {
 
     }
 
-    @Override
-    public void ingresarMateriaPrima(MateriaPrima materiaPrima) {
-        materiaPrima.setId(listaMateriaPrima.size());
-        listaMateriaPrima.add(materiaPrima);
-    }
 
     @Override
     public void ingresarProducto(Producto producto) {
@@ -89,12 +81,6 @@ public class SistemaProductosImpl implements SistemaProductos, Serializable {
         }
         return -1; // El producto no se encontró
     }
-
-    @Override
-    public void eliminarMateriaPrima(MateriaPrima materiaPrima) {
-        listaMateriaPrima.remove(materiaPrima);
-    }
-
     @Override
     public boolean eliminarProducto(Producto producto) {
         return listaProducto.remove(producto);
@@ -129,7 +115,7 @@ public class SistemaProductosImpl implements SistemaProductos, Serializable {
 
                     // Crear un nuevo objeto Producto y agregarlo a la lista
                     Producto producto = new Producto(codigo,nombre, cantidad);
-                    listaProducto.add(producto);
+                    ingresarProducto(producto);
                 }
             } else {
                 System.err.println("No se pudo cargar el archivo JSON de productos.");
@@ -139,11 +125,6 @@ public class SistemaProductosImpl implements SistemaProductos, Serializable {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private void obtenerMateriasPrimas(){
-        ingresarMateriaPrima(new MateriaPrima("azufre",2,"mg"));
-
     }
 
 }

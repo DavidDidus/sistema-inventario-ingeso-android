@@ -28,6 +28,11 @@ public class SistemaFacadeImpl implements SistemaFacade{
     }
 
     @Override
+    public List<MateriaPrima> getListaMateriaPrima() {
+        return materiasPrimas.getListaMateriaPrima();
+    }
+
+    @Override
     public boolean editarProducto(Producto producto) {
         return productos.editarProducto(producto);
     }

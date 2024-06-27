@@ -63,7 +63,6 @@ public class ListaProductosActivity extends AppCompatActivity implements SearchV
     protected void onRestart() {
         super.onRestart();
 
-        Toast.makeText(instancia, "onResume", Toast.LENGTH_SHORT).show();
         if (adapter != null) {
             adapter.setProductos((ArrayList<Producto>) sistema.getListaProducto());
         } else {
