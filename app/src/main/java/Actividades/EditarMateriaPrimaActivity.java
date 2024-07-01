@@ -34,57 +34,58 @@ public class EditarMateriaPrimaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ver_materia_prima);
 
-        initViews();
-        setupSpinner();
-        setupSistemaFacade();
-        setupFabButtons();
-        setupGuardarButton();
-        setupEditTextFields();
-        obtenerMateriaPrima();
-        populateFieldsIfMateriaPrimaExists();
-    }
-
-    private void initViews() {
-        unidades = findViewById(R.id.spinnerUnits);
-        fabEdit = findViewById(R.id.fabEdit);
-        fabDelete = findViewById(R.id.fabDelete);
-        guardarButton = findViewById(R.id.EditButton);
-        etNombreMateriaPrima = findViewById(R.id.etMateriaPrimanombre);
-        etCantMateriaPrima = findViewById(R.id.etMateriaPrimaCant);
-        etUnidadMateriaPrima = findViewById(R.id.etMateriaPrimaUnidad);
-    }
-
-    private void setupSpinner() {
         ArrayList<String> units = new ArrayList<>();
         units.add("kilos (kg)");
         units.add("gramos (g)");
         units.add("litros (l)");
 
+        unidades = findViewById(R.id.spinnerUnits);
+
+
         unidades.setVisibility(View.VISIBLE);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, units);
+        sistema = SistemaFacadeImpl.getInstancia();
+
+        fabEdit = findViewById(R.id.fabEdit);
+        fabEdit.setVisibility(View.INVISIBLE);
+
+        fabDelete = findViewById(R.id.fabDelete);
+        fabDelete.setVisibility(View.INVISIBLE);
+
+        guardarButton = findViewById(R.id.EditButton);
+        guardarButton.setVisibility(View.VISIBLE);
+
+        etNombreMateriaPrima = findViewById(R.id.etMateriaPrimanombre);
+        etCantMateriaPrima = findViewById(R.id.etMateriaPrimaCant);
+        etUnidadMateriaPrima = findViewById(R.id.etMateriaPrimaUnidad);
+        etUnidadMateriaPrima.setVisibility(View.INVISIBLE);
+
+
+
+
+        obtenerMateriaPrima();
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,units);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         unidades.setAdapter(adapter);
+
+
+        if (materiaPrima != null) {
+            etNombreMateriaPrima.setHint(materiaPrima.getNombre());
+            etCantMateriaPrima.setHint(String.valueOf(materiaPrima.getCantidad()));
+
+
+        } else {
+            Toast.makeText(this, "Materia prima no encontrada", Toast.LENGTH_SHORT).show();
+            finish();
+        }
     }
 
-    private void setupSistemaFacade() {
-        sistema = SistemaFacadeImpl.getInstancia();
+    public int obtenerId() {
+        return getIntent().getIntExtra("id", -1);
     }
 
-    private void setupFabButtons() {
-        fabEdit.setVisibility(View.INVISIBLE);
-        fabDelete.setVisibility(View.INVISIBLE);
-    }
-
-    private void setupGuardarButton() {
-        guardarButton.setVisibility(View.VISIBLE);
-    }
-
-    private void setupEditTextFields() {
-        etUnidadMateriaPrima.setVisibility(View.INVISIBLE);
-    }
-
-    private void obtenerMateriaPrima() {
+    public void obtenerMateriaPrima() {
         int idMateriaPrima = obtenerId();
 
         if (idMateriaPrima != -1) {
@@ -98,20 +99,6 @@ public class EditarMateriaPrimaActivity extends AppCompatActivity {
         } else {
             materiaPrima = null;
         }
-    }
-
-    private void populateFieldsIfMateriaPrimaExists() {
-        if (materiaPrima != null) {
-            etNombreMateriaPrima.setHint(materiaPrima.getNombre());
-            etCantMateriaPrima.setHint(String.valueOf(materiaPrima.getCantidad()));
-        } else {
-            Toast.makeText(this, "Materia prima no encontrada", Toast.LENGTH_SHORT).show();
-            finish();
-        }
-    }
-
-    public int obtenerId() {
-        return getIntent().getIntExtra("id", -1);
     }
 
     public void pressEdit(View v) {
@@ -133,6 +120,7 @@ public class EditarMateriaPrimaActivity extends AppCompatActivity {
         if (nuevoNombre.isEmpty()) {
             nuevoNombre = materiaPrima.getNombre();
         }
+
 
         materiaPrima.setNombre(nuevoNombre);
         materiaPrima.setUnidad(nuevaCategoria);

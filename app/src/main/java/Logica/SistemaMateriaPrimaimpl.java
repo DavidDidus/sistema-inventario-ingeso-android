@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import Dominio.MateriaPrima;
@@ -125,6 +126,19 @@ public class SistemaMateriaPrimaimpl implements SistemaMateriaPrima {
     public boolean eliminarMateriaPrima(MateriaPrima materiaPrima) {
         listaMateriaPrima.remove(busquedaLineal(materiaPrima.getId()));
         return true;
+    }
+    @Override
+    public void actualizarMateriasPrimas(Collection<MateriaPrima> materiasPrimasActualizadas) {
+        // Lógica para actualizar las materias primas en el sistema
+        for (MateriaPrima materiaPrimaActualizada : materiasPrimasActualizadas) {
+            // Buscar y actualizar la materia prima en la lista del sistema
+            for (MateriaPrima materiaPrima : listaMateriaPrima) {
+                if (materiaPrima.getId() == materiaPrimaActualizada.getId()) {
+                    materiaPrima.setCantidad(materiaPrimaActualizada.getCantidad());
+                    break;
+                }
+            }
+        }
     }
 
 

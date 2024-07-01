@@ -33,7 +33,6 @@ public class ListaProductosActivity extends AppCompatActivity implements SearchV
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_productos);
 
@@ -62,6 +61,7 @@ public class ListaProductosActivity extends AppCompatActivity implements SearchV
     @Override
     protected void onRestart() {
         super.onRestart();
+
 
         if (adapter != null) {
             adapter.setProductos((ArrayList<Producto>) sistema.getListaProducto());

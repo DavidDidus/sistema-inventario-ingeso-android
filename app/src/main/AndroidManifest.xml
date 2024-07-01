@@ -15,22 +15,25 @@
         android:theme="@style/Theme.Sistemainventarioingeso"
         tools:targetApi="31">
         <activity
+            android:name="Actividades.SeleccionarMateriasPrimasActivity"
+            android:exported="false" />
+        <activity
             android:name="Actividades.NuevaMateriaPrimaActivity"
-            android:exported="false" >
-        <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value="Actividades.ListaMateriasPrimasActivity" />
+            android:exported="false">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="Actividades.ListaMateriasPrimasActivity" />
         </activity>
         <activity
             android:name="Actividades.VerMateriaPrimaActivity"
-            android:exported="false" >
+            android:exported="false">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="Actividades.ListaMateriasPrimasActivity" />
         </activity>
         <activity
             android:name="Actividades.EditarMateriaPrimaActivity"
-            android:exported="false" >
+            android:exported="false">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="Actividades.ListaMateriasPrimasActivity" />

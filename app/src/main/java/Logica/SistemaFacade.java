@@ -1,5 +1,6 @@
 package Logica;
 
+import java.util.Collection;
 import java.util.List;
 
 import Dominio.MateriaPrima;
@@ -22,4 +23,6 @@ public interface SistemaFacade {
     boolean eliminarMateriaPrima(MateriaPrima materiaPrima);
 
     int busquedaMateriasPrimas(int idMateriaPrima);
+
+    void actualizarMateriasPrimas(Collection<MateriaPrima> materiasPrimasActualizadas);
 }
