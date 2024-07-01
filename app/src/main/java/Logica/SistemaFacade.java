@@ -14,4 +14,12 @@ public interface SistemaFacade {
     public int busquedaLinealProductos(String nombre);
 
     public boolean eliminarProducto(Producto producto);
+    public void ingresarMateriaPrima(MateriaPrima materiaPrima);
+
+    int busquedaBinariaMateriasPrimas(int idMateriaPrima);
+
+    boolean editarMateriaPrima(MateriaPrima materiaPrima);
+    boolean eliminarMateriaPrima(MateriaPrima materiaPrima);
+
+    int busquedaMateriasPrimas(int idMateriaPrima);
 }

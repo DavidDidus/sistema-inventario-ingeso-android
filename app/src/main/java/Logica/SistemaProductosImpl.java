@@ -83,7 +83,8 @@ public class SistemaProductosImpl implements SistemaProductos, Serializable {
     }
     @Override
     public boolean eliminarProducto(Producto producto) {
-        return listaProducto.remove(producto);
+        listaProducto.remove(busquedaLinealProductos(producto.getNombre()));
+        return true;
     }
     private void obtenerProductos() {
         try {

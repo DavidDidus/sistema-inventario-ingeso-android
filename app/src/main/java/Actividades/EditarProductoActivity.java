@@ -15,12 +15,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import Dominio.Producto;
 import Logica.SistemaFacade;
 import Logica.SistemaFacadeImpl;
-import Logica.SistemaProductos;
-import Logica.SistemaProductosImpl;
 
 public class EditarProductoActivity extends AppCompatActivity{
 
-    private EditText etProductName, etProductCategory,etProductAmount;
+    private EditText etProductName, etProductCategory, etProductAmount;
     private FloatingActionButton fabEdit;
     private Producto producto;
     private SistemaFacade sistema;
@@ -40,36 +38,50 @@ public class EditarProductoActivity extends AppCompatActivity{
         fabEdit = findViewById(R.id.fabEdit);
         fabEdit.setVisibility(View.INVISIBLE);
 
-        guardarButton= findViewById(R.id.EditButton);
+        guardarButton = findViewById(R.id.EditButton);
         guardarButton.setVisibility(View.VISIBLE);
 
         obtenerProducto();
 
-        etProductName.setHint(producto.getNombre());
-        etProductAmount.setHint(String.valueOf(producto.getCantidad()));
-        etProductCategory.setHint(producto.getCategoria());
-
-
-    }
-    public int obtenerId(){
-        if (getIntent().hasExtra("id")) {
-            return  getIntent().getIntExtra("id", -1);
-
-        }else{
-            return -1;
+        if (producto != null) {
+            etProductName.setHint(producto.getNombre());
+            etProductAmount.setHint(String.valueOf(producto.getCantidad()));
+            etProductCategory.setHint(producto.getCategoria());
+        } else {
+            Toast.makeText(this, "Producto no encontrado", Toast.LENGTH_SHORT).show();
+            finish(); // Cierra la actividad si el producto no se encuentra
         }
     }
-    public void obtenerProducto(){
 
-        int posProducto = sistema.busquedaBinariaProductos(obtenerId());
-        producto = sistema.getListaProducto().get(posProducto);
-
-
+    public int obtenerId() {
+        return getIntent().getIntExtra("id", -1);
     }
+
+    public void obtenerProducto() {
+        int idProducto = obtenerId();
+
+        if (idProducto != -1) {
+            int posProducto = sistema.busquedaBinariaProductos(idProducto);
+
+            if (posProducto >= 0 && posProducto < sistema.getListaProducto().size()) {
+                producto = sistema.getListaProducto().get(posProducto);
+            } else {
+                producto = null;
+            }
+        } else {
+            producto = null;
+        }
+    }
+
     public void pressEdit(View v) {
+        if (producto == null) {
+            Toast.makeText(this, "Producto no encontrado", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         String nuevoNombre = etProductName.getText().toString();
         String nuevaCategoria = etProductCategory.getText().toString();
-        int nuevaCantidad ;
+        int nuevaCantidad;
 
         try {
             nuevaCantidad = Integer.parseInt(etProductAmount.getText().toString().trim());
@@ -77,38 +89,26 @@ public class EditarProductoActivity extends AppCompatActivity{
             nuevaCantidad = producto.getCantidad();
         }
 
-        // Verificar si el nuevo nombre está vacío
         if (nuevoNombre.isEmpty()) {
-            // Si el nuevo nombre está vacío, se asigna el nombre original del producto
             nuevoNombre = producto.getNombre();
         }
-        // Verificar si la nueva categoría está vacía
         if (nuevaCategoria.isEmpty()) {
-            // Si la nueva categoría está vacía, se asigna la categoría original del producto
             nuevaCategoria = producto.getCategoria();
         }
 
-        // Actualizar los datos del producto
         producto.setNombre(nuevoNombre);
         producto.setCategoria(nuevaCategoria);
         producto.setCantidad(nuevaCantidad);
 
-        // Intentar editar el producto en el sistema
         boolean resultado = sistema.editarProducto(producto);
 
         if (resultado) {
-            // Mostrar un mensaje de éxito
             Toast.makeText(this, "Producto actualizado correctamente", Toast.LENGTH_SHORT).show();
-            // Regresar a la actividad ListaProductosActivity
             Intent intent = new Intent(this, ListaProductosActivity.class);
             startActivity(intent);
-            // Finalizar esta actividad
             finish();
         } else {
-            // Mostrar un mensaje de error si no se pudo editar el producto
             Toast.makeText(this, "Error al actualizar el producto", Toast.LENGTH_SHORT).show();
         }
     }
-
-
 }

@@ -52,29 +52,23 @@ public class VerActivity extends AppCompatActivity {
     private void setupInitialData() {
         producto = (Producto) getIntent().getSerializableExtra("datos");
         if (producto != null) {
-        String productoNombre = producto.getNombre();
+            String productoNombre = producto.getNombre();
 
-                producto = sistema.getListaProducto().get(sistema.busquedaLinealProductos(productoNombre));
-                if (producto != null) {
-                    guardarButton.setVisibility(View.INVISIBLE);
+            guardarButton.setVisibility(View.INVISIBLE);
 
-                    etProductName.setText(producto.getNombre());
-                    etProductCategory.setText(producto.getCategoria());
-                    etProductAmount.setText(String.valueOf(producto.getCantidad()));
+            etProductName.setText(producto.getNombre());
+            etProductCategory.setText(producto.getCategoria());
+            etProductAmount.setText(String.valueOf(producto.getCantidad()));
 
-                    etProductName.setEnabled(false);
-                    etProductCategory.setEnabled(false);
-                    etProductAmount.setEnabled(false);
+            etProductName.setEnabled(false);
+            etProductCategory.setEnabled(false);
+            etProductAmount.setEnabled(false);
 
-                    etProductName.setTextColor(Color.rgb(0, 0, 0));
-                    etProductCategory.setTextColor(Color.rgb(0, 0, 0));
-                    etProductAmount.setTextColor(Color.rgb(0, 0, 0));
-                } else {
-                    Toast.makeText(this, "Producto no encontrado", Toast.LENGTH_SHORT).show();
-                    finish(); // Cierra la actividad si el producto no se encuentra
-                }
+            etProductName.setTextColor(Color.rgb(0, 0, 0));
+            etProductCategory.setTextColor(Color.rgb(0, 0, 0));
+            etProductAmount.setTextColor(Color.rgb(0, 0, 0));
 
-        } else {
+        }else{
             Toast.makeText(this, "Producto nulo", Toast.LENGTH_SHORT).show();
             finish(); // Cierra la actividad si el producto es nulo
         }
@@ -84,12 +78,12 @@ public class VerActivity extends AppCompatActivity {
         fabEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Obtener la posición del adaptador
-                int position = getIntent().getIntExtra("position", -1);
-                if (position != -1) {
+                if (producto != null) {
                     Intent intent = new Intent(VerActivity.this, EditarProductoActivity.class);
-                    intent.putExtra("position", position);
+                    intent.putExtra("id", producto.getId()); // Asumiendo que el producto tiene un método getId()
                     startActivity(intent);
+                } else {
+                    Toast.makeText(VerActivity.this, "Producto no encontrado", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -99,6 +93,7 @@ public class VerActivity extends AppCompatActivity {
                 confirmDelete();
             }
         });
+
     }
     public void confirmDelete() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

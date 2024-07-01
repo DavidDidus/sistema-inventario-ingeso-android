@@ -80,6 +80,54 @@ public class SistemaMateriaPrimaimpl implements SistemaMateriaPrima {
         return listaMateriaPrima;
     }
 
+    @Override
+    public String busquedaLinealMateriaPrima(String materiaPrima) {
+        return null;
+    }
+
+    @Override
+    public int busquedaBinaria(int id) {
+        int posIzq = 0;
+        int posDer = listaMateriaPrima.size() - 1;
+
+        while (posIzq <= posDer) {
+            int posMid = posIzq + (posDer - posIzq) / 2;
+            if (id == listaMateriaPrima.get(posMid).getId()) {
+                return posMid;
+            } else if (id < listaMateriaPrima.get(posMid).getId()) {
+                posDer = posMid - 1;
+            } else {
+                posIzq = posMid + 1;
+            }
+        }
+        return -1;
+    }
+    @Override
+    public int busquedaLineal(int id){
+        for(int i=0; i<listaMateriaPrima.size();i++){
+            if(listaMateriaPrima.get(i).getId() == id){
+                return i;
+            }
+        }
+        return -1;
+
+
+    }
+
+    @Override
+    public boolean editarMateriaPrima(MateriaPrima materiaPrima) {
+        listaMateriaPrima.set(busquedaBinaria(materiaPrima.getId()),materiaPrima);
+
+        return true;
+    }
+
+    @Override
+    public boolean eliminarMateriaPrima(MateriaPrima materiaPrima) {
+        listaMateriaPrima.remove(busquedaLineal(materiaPrima.getId()));
+        return true;
+    }
+
+
 }
 
 

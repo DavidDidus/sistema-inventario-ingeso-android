@@ -57,4 +57,31 @@ public class SistemaFacadeImpl implements SistemaFacade{
     public boolean eliminarProducto(Producto producto) {
         return productos.eliminarProducto(producto);
     }
+
+    @Override
+    public void ingresarMateriaPrima(MateriaPrima materiaPrima) {
+        materiasPrimas.ingresarMateriaPrima(materiaPrima);
+    }
+
+    @Override
+    public int busquedaBinariaMateriasPrimas(int idMateriaPrima) {
+        return materiasPrimas.busquedaBinaria(idMateriaPrima);
+    }
+
+    @Override
+    public boolean editarMateriaPrima(MateriaPrima materiaPrima) {
+
+
+        return materiasPrimas.editarMateriaPrima(materiaPrima);
+    }
+
+    @Override
+    public boolean eliminarMateriaPrima(MateriaPrima materiaPrima) {
+        return materiasPrimas.eliminarMateriaPrima(materiaPrima);
+    }
+
+    @Override
+    public int busquedaMateriasPrimas(int idMateriaPrima) {
+        return materiasPrimas.busquedaLineal(idMateriaPrima);
+    }
 }
