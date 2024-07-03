@@ -9,13 +9,23 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
+import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.QueryDocumentSnapshot;
+import com.google.cloud.firestore.SetOptions;
+import com.google.cloud.firestore.WriteBatch;
+
 import Dominio.MateriaPrima;
+import DataBase.ConnectionDB;
+
+
 
 public class SistemaMateriaPrimaimpl implements SistemaMateriaPrima {
     private static SistemaMateriaPrima  instance;
     private final List<MateriaPrima> listaMateriaPrima;
+
 
     private SistemaMateriaPrimaimpl(){
         listaMateriaPrima = new ArrayList<>();
@@ -125,6 +135,42 @@ public class SistemaMateriaPrimaimpl implements SistemaMateriaPrima {
     public boolean eliminarMateriaPrima(MateriaPrima materiaPrima) {
         listaMateriaPrima.remove(busquedaLineal(materiaPrima.getId()));
         return true;
+    }
+    @Override
+    public void actualizarMateriasPrimas(Collection<MateriaPrima> materiasPrimasActualizadas) {
+        // Lógica para actualizar las materias primas en el sistema
+        for (MateriaPrima materiaPrimaActualizada : materiasPrimasActualizadas) {
+            // Buscar y actualizar la materia prima en la lista del sistema
+            for (MateriaPrima materiaPrima : listaMateriaPrima) {
+                if (materiaPrima.getId() == materiaPrimaActualizada.getId()) {
+                    materiaPrima.setCantidad(materiaPrimaActualizada.getCantidad());
+                    break;
+                }
+            }
+        }
+    }
+    private void obtenerMateriasPrimasDB() {
+        Firestore dataBase = ConnectionDB.getInstance().getDb();
+        try {
+            List<QueryDocumentSnapshot> documents =
+                    dataBase.collection("materias_primas").get().get().getDocuments();
+            for (QueryDocumentSnapshot document : documents) {
+                MateriaPrima materiaPrima = new MateriaPrima(
+                        document.getString("nombre"),
+                        document.getDouble("cantidad"),
+                        document.getString("unidad")
+                );
+                double idDouble = document.getDouble("id");
+                int id = (int) idDouble;
+                materiaPrima.setId(id);
+                listaMateriaPrima.add(materiaPrima);
+            }
+            if(listaMateriaPrima.isEmpty()){
+                obtenerMateriasPrimas();
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
 

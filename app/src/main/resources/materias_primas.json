@@ -1,17 +1,17 @@
 [
     {
         "unidad": "litros (l)",
-        "cantidad": 0,
+        "cantidad": 10,
         "nombre": "Aceite de Almendras"
     },
     {
         "unidad": "kilos (kg)",
-        "cantidad": 0,
+        "cantidad": 10,
         "nombre": "Proteina de Arroz"
     },
     {
         "unidad": "kilos (kg)",
-        "cantidad": 0,
+        "cantidad": 10,
         "nombre": "Cera de Abejas"
     }
 ]

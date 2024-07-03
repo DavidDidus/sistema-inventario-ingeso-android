@@ -42,18 +42,6 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         inflater.inflate(R.menu.menu_principal,menu);
         return true;
     }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        if (item.getItemId() == R.id.menuNuevo) {
-            nuevoRegistro();
-            return true;
-        } else {
-            return super.onOptionsItemSelected(item);
-        }
-    }
-    private void nuevoRegistro(){
-        //Intent intent = new Intent(this,)
-        //startActivity(intent,);
-    }
+
 
 }

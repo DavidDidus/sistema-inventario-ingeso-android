@@ -7,11 +7,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sistema_inventario_ingeso.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
+
+import Dominio.MateriaPrima;
 import Dominio.Producto;
 import Logica.SistemaFacade;
 import Logica.SistemaFacadeImpl;
@@ -20,9 +24,11 @@ public class EditarProductoActivity extends AppCompatActivity{
 
     private EditText etProductName, etProductCategory, etProductAmount;
     private FloatingActionButton fabEdit;
-    private Producto producto;
+    private static Producto producto;
     private SistemaFacade sistema;
     private Button guardarButton;
+    private Boolean cantedit;
+    private static final int REQUEST_CODE_SELECCIONAR_MATERIAS_PRIMAS = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,11 +89,14 @@ public class EditarProductoActivity extends AppCompatActivity{
         String nuevaCategoria = etProductCategory.getText().toString();
         int nuevaCantidad;
 
-        try {
+        if(!etProductAmount.getText().toString().equals("")){
             nuevaCantidad = Integer.parseInt(etProductAmount.getText().toString().trim());
-        } catch (NumberFormatException e) {
+            cantedit = true;
+        }else{
             nuevaCantidad = producto.getCantidad();
+            cantedit = false;
         }
+
 
         if (nuevoNombre.isEmpty()) {
             nuevoNombre = producto.getNombre();
@@ -99,7 +108,37 @@ public class EditarProductoActivity extends AppCompatActivity{
         producto.setNombre(nuevoNombre);
         producto.setCategoria(nuevaCategoria);
         producto.setCantidad(nuevaCantidad);
+        if(cantedit){
+            Intent intent = new Intent(this, SeleccionarMateriasPrimasActivity.class);
+            startActivityForResult(intent, REQUEST_CODE_SELECCIONAR_MATERIAS_PRIMAS);
 
+        }else{
+            editar();
+        }
+
+
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_SELECCIONAR_MATERIAS_PRIMAS && resultCode == RESULT_OK && data != null) {
+            ArrayList<MateriaPrima> materiasPrimasSeleccionadas = (ArrayList<MateriaPrima>) data.getSerializableExtra("materiasPrimasSeleccionadas");
+            // Descontar las materias primas seleccionadas
+            for (MateriaPrima materiaPrimaSeleccionada : materiasPrimasSeleccionadas) {
+                for (MateriaPrima materiaPrima : sistema.getListaMateriaPrima()) {
+                    if (materiaPrima.getNombre().equals(materiaPrimaSeleccionada.getNombre())) {
+                        double nuevaCantidad = materiaPrima.getCantidad() - materiaPrimaSeleccionada.getCantidad();
+                        materiaPrima.setCantidad(nuevaCantidad);
+                    }
+                }
+            }
+
+            editar();
+        }
+    }
+    private void editar(){
         boolean resultado = sistema.editarProducto(producto);
 
         if (resultado) {

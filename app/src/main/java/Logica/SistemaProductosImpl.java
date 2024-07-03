@@ -1,17 +1,27 @@
 package Logica;
 
+import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.QueryDocumentSnapshot;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
+import DataBase.ConnectionDB;
 import Dominio.MateriaPrima;
 import Dominio.Producto;
 
@@ -87,6 +97,35 @@ public class SistemaProductosImpl implements SistemaProductos, Serializable {
         return true;
     }
     private void obtenerProductos() {
+        if(ConnectionDB.getInstance().isInternetAvailable()){
+            Firestore dataBase = ConnectionDB.getInstance().getDb();
+            try {
+                String fechaActualizacionStr = dataBase.collection("actualizaciones")
+                        .document("ultimaActualizacion").get().get().getString("fecha");
+                ZonedDateTime fechaActualizacion = ZonedDateTime.parse(fechaActualizacionStr, DateTimeFormatter.ISO_ZONED_DATE_TIME);
+
+                File file = new File(productosFilePath);
+                ZonedDateTime fechaUltimaModificacion = ZonedDateTime.ofInstant(
+                        Instant.ofEpochMilli(file.lastModified()), ZoneId.systemDefault());
+
+                long diferencia = ChronoUnit.SECONDS.between(fechaUltimaModificacion, fechaActualizacion);
+                System.out.println("Fecha de actualización: " + fechaActualizacion);
+                System.out.println("Fecha de última modificación: " + fechaUltimaModificacion);
+                System.out.println("Diferencia: " + diferencia);
+
+                if (Math.abs(diferencia) > 5 && file.exists()) {
+                    obtenerProductosJson();
+                } else {
+                    obtenerProductosDB();
+                }
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            obtenerProductosJson();
+        }
+    }
+    private void obtenerProductosJson() {
         try {
             // Obtener la ruta del archivo JSON como un recurso
             InputStream inputStream = getClass().getResourceAsStream("/productos.json");
@@ -125,6 +164,28 @@ public class SistemaProductosImpl implements SistemaProductos, Serializable {
             e.printStackTrace();
         } catch (JSONException e) {
             throw new RuntimeException(e);
+        }
+    }
+    private void obtenerProductosDB() {
+        Firestore dataBase = ConnectionDB.getInstance().getDb();
+        try {
+            List<QueryDocumentSnapshot> documents =
+                    dataBase.collection("productos").get().get().getDocuments();
+            for (QueryDocumentSnapshot document : documents) {
+                Producto producto = new Producto(
+                        document.getString("categoria"),
+                        document.getString("nombre"),
+                        document.getLong("cantidad").intValue()
+                );
+                producto.setId(document.getLong("id").intValue());
+                listaProducto.add(producto);
+
+            }
+            if(listaProducto.isEmpty()){
+                obtenerProductosJson();
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
         }
     }
 

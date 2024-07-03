@@ -1,6 +1,6 @@
 package Logica;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import Dominio.MateriaPrima;
@@ -83,5 +83,9 @@ public class SistemaFacadeImpl implements SistemaFacade{
     @Override
     public int busquedaMateriasPrimas(int idMateriaPrima) {
         return materiasPrimas.busquedaLineal(idMateriaPrima);
+    }
+    @Override
+    public void actualizarMateriasPrimas(Collection<MateriaPrima> materiasPrimasActualizadas) {
+        materiasPrimas.actualizarMateriasPrimas(materiasPrimasActualizadas);
     }
 }
