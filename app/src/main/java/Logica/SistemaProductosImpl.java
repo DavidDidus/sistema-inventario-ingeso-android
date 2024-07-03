@@ -33,6 +33,7 @@ public class SistemaProductosImpl implements SistemaProductos, Serializable {
     private SistemaProductosImpl() {
         listaProducto = new ArrayList<>();
         obtenerProductos();
+
     }
     // Método estático para obtener la única instancia de la clase
     public static synchronized SistemaProductosImpl getInstance() {
@@ -104,7 +105,7 @@ public class SistemaProductosImpl implements SistemaProductos, Serializable {
                         .document("ultimaActualizacion").get().get().getString("fecha");
                 ZonedDateTime fechaActualizacion = ZonedDateTime.parse(fechaActualizacionStr, DateTimeFormatter.ISO_ZONED_DATE_TIME);
 
-                File file = new File(productosFilePath);
+                File file = new File("/productos.json");
                 ZonedDateTime fechaUltimaModificacion = ZonedDateTime.ofInstant(
                         Instant.ofEpochMilli(file.lastModified()), ZoneId.systemDefault());
 

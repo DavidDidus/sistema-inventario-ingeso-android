@@ -31,8 +31,8 @@ public class ConnectionDB {
         try{
             if(isInternetAvailable()){
                 FileInputStream sa =
-                        new FileInputStream("src/main/resources/link/firebase_connection.json");
-                FirebaseOptions options = FirebaseOptions.Builder
+                        new FileInputStream("src/main/resources/firebase_connection.json");
+                FirebaseOptions options = FirebaseOptions.builder()
                         .setCredentials(GoogleCredentials.fromStream(sa))
                         .build();
                 FirebaseApp.initializeApp(options);
@@ -47,6 +47,7 @@ public class ConnectionDB {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
     }
 
     public Firestore getDb() {

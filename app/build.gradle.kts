@@ -34,14 +34,18 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    packagingOptions {
+        exclude("META-INF/DEPENDENCIES")
+        exclude("META-INF/io.netty.versions.properties")
+        exclude("META-INF/INDEX.LIST")
+    }
+
 }
 
 dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation(platform("com.google.firebase:firebase-bom:32.6.0"))
-    implementation("com.google.cloud:google-cloud-firestore:3.21.6")
-    implementation("com.google.firebase:firebase-admin:9.2.0")
-    implementation("com.google.firebase:firebase-firestore")
+    implementation("com.google.cloud:google-cloud-firestore:3.0.21")
+    implementation("com.google.firebase:firebase-admin:9.3.0")
     implementation("com.google.android.material:material:1.12.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.navigation:navigation-fragment:2.5.3")
