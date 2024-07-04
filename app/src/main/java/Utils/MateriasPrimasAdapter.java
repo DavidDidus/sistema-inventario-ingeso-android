@@ -1,8 +1,10 @@
 package Utils;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -57,7 +59,7 @@ public class MateriasPrimasAdapter extends RecyclerView.Adapter<MateriasPrimasAd
                 int cantidadSeleccionada = Integer.parseInt(cantidadStr);
                 if (cantidadSeleccionada > 0) {
                     MateriaPrima materiaPrima = listaMateriasPrimas.get(holder.getAdapterPosition());
-                    MateriaPrima materiaPrimaSeleccionada = new MateriaPrima(materiaPrima.getNombre(), cantidadSeleccionada, materiaPrima.getUnidad());
+                    MateriaPrima materiaPrimaSeleccionada = new MateriaPrima(0,materiaPrima.getNombre(), cantidadSeleccionada, materiaPrima.getUnidad());
                     materiasPrimasSeleccionadas.add(materiaPrimaSeleccionada);
                 }
             }
@@ -70,11 +72,13 @@ public class MateriasPrimasAdapter extends RecyclerView.Adapter<MateriasPrimasAd
         TextView tvNombreMateriaPrima, tvCant;
         EditText etCantidadMateriaPrima;
 
+
         public MateriaPrimaViewHolder(@NonNull View itemView) {
             super(itemView);
             tvNombreMateriaPrima = itemView.findViewById(R.id.tvNombreMateriaPrima);
             etCantidadMateriaPrima = itemView.findViewById(R.id.etCantidadMateriaPrima);
             tvCant = itemView.findViewById(R.id.tvCant);
+
         }
     }
 }

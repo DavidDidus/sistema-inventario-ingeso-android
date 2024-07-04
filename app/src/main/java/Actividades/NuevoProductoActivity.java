@@ -4,8 +4,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -25,6 +27,7 @@ public class NuevoProductoActivity extends AppCompatActivity {
     private SistemaFacade sistema;
     private static final int REQUEST_CODE_SELECCIONAR_MATERIAS_PRIMAS = 1;
     private static Producto productoNuevo;
+    private Button boton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,8 @@ public class NuevoProductoActivity extends AppCompatActivity {
         etProductName = findViewById(R.id.etProductName);
         etProductCategory = findViewById(R.id.etProductCategory);
         etProductAmount = findViewById(R.id.etProductAmount);
+        boton = findViewById(R.id.button);
+        boton.setBackgroundColor(Color.rgb(102, 187, 106));
     }
 
     public void pressRegistro(View v) {
@@ -45,7 +50,7 @@ public class NuevoProductoActivity extends AppCompatActivity {
             int cantidad = Integer.parseInt(etProductAmount.getText().toString());
 
             if (isProductNameUnique(nombre)) {
-                productoNuevo = new Producto(categoria, nombre, cantidad);
+                productoNuevo = new Producto(sistema.getListaProducto().size(),categoria, nombre, cantidad);
 
                 // Lanzar la actividad para seleccionar materias primas
                 Intent intent = new Intent(this, SeleccionarMateriasPrimasActivity.class);
@@ -78,7 +83,7 @@ public class NuevoProductoActivity extends AppCompatActivity {
                     }
                 }
 
-                Producto productoNuevo = new Producto(
+                Producto productoNuevo = new Producto(sistema.getListaProducto().size(),
                         etProductCategory.getText().toString(),
                         etProductName.getText().toString(),
                         Integer.parseInt(etProductAmount.getText().toString())

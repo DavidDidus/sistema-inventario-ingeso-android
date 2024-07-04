@@ -6,19 +6,18 @@
         <!-- Add the following line to include the action bar -->
         <item name="windowActionBar">true</item>
         <item name="windowNoTitle">false</item>
+        <item name="android:navigationBarColor">@color/rosadoPasterl</item>
     </style>
 
     <!-- Ensure this style is being used and configured correctly -->
     <style name="Theme.Sistemainventarioingeso" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:navigationBarColor">@color/rosadoPasterl</item>
     </style>
     <style name="Theme.SistemainventarioingesoProducto" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:navigationBarColor">@color/rosadoPasterl</item>
     </style>
 </resources>

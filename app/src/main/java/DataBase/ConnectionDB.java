@@ -1,23 +1,12 @@
 package DataBase;
 
-import com.google.auth.oauth2.GoogleCredentials;
-import com.google.cloud.firestore.Firestore;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
-import com.google.firebase.cloud.FirestoreClient;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.InetAddress;
-
 
 public class ConnectionDB {
-    private static Firestore db;
+    //private static Firestore db;
     private static ConnectionDB instance;
 
     private ConnectionDB() {
-        conectFirebase();
+
     }
 
     public static ConnectionDB getInstance() {
@@ -26,7 +15,7 @@ public class ConnectionDB {
         }
         return instance;
     }
-
+/*
     private void conectFirebase() {
         try{
             if(isInternetAvailable()){
@@ -66,4 +55,6 @@ public class ConnectionDB {
             return false;
         }
     }
+    */
+
 }

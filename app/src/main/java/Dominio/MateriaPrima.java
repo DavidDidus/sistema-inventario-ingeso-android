@@ -8,7 +8,8 @@ public class MateriaPrima implements Serializable {
     private double cantidad;
     private String unidad;
 
-    public MateriaPrima(String nombre, double cantidad, String unidad){
+    public MateriaPrima(int id,String nombre, double cantidad, String unidad){
+        this.id = id;
         this.nombre = nombre;
         this.cantidad = cantidad;
         this.unidad = unidad;

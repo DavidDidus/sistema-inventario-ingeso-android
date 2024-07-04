@@ -3,9 +3,11 @@ package Actividades;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -23,6 +25,7 @@ public class NuevaMateriaPrimaActivity extends AppCompatActivity {
     private Spinner spinner;
     private EditText etMateriaPrimaNombre,etMateriaPrimaCant;
     private SistemaFacade sistema;
+    private Button boton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +36,8 @@ public class NuevaMateriaPrimaActivity extends AppCompatActivity {
         etMateriaPrimaNombre = findViewById(R.id.etMateriaPrimaNombre);
         etMateriaPrimaCant = findViewById(R.id.etMateriaPrimacant);
         spinner = findViewById(R.id.spinner);
+        boton = findViewById(R.id.button);
+        boton.setBackgroundColor(Color.rgb(102, 187, 106));
 
         setupSpinner();
 
@@ -57,7 +62,7 @@ public class NuevaMateriaPrimaActivity extends AppCompatActivity {
 
             // Verificar si el nombre del producto ya existe
             if (isProductNameUnique(nombre)) {
-                MateriaPrima materiaPrimaNueva = new MateriaPrima(nombre,cantidad,unidad);
+                MateriaPrima materiaPrimaNueva = new MateriaPrima(sistema.getListaMateriaPrima().size(),nombre,cantidad,unidad);
                 sistema.ingresarMateriaPrima(materiaPrimaNueva);
                 Toast.makeText(NuevaMateriaPrimaActivity.this, "Materia prima " + nombre + " ingresado.", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, ListaMateriasPrimasActivity.class);

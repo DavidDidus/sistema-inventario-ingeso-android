@@ -29,7 +29,7 @@ public class VerMateriaPrimaActivity extends AppCompatActivity {
     private SistemaFacade sistema;
     private FloatingActionButton fabEdit, fabDelete;
     private EditText etNombreMateriaPrima, etUnidadMateriaPrima, etCantMateriaPrima;
-
+    private Button boton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +49,7 @@ public class VerMateriaPrimaActivity extends AppCompatActivity {
         etUnidadMateriaPrima = findViewById(R.id.etMateriaPrimaUnidad);
         fabEdit = findViewById(R.id.fabEdit);
         fabDelete = findViewById(R.id.fabDelete);
+
     }
 
     private void setupSistemaFacade() {

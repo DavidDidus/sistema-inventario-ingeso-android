@@ -1,14 +1,12 @@
 package Logica;
 
-import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.QueryDocumentSnapshot;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -35,6 +33,7 @@ public class SistemaProductosImpl implements SistemaProductos, Serializable {
         obtenerProductos();
 
     }
+
     // Método estático para obtener la única instancia de la clase
     public static synchronized SistemaProductosImpl getInstance() {
         if (instance == null) {
@@ -42,6 +41,7 @@ public class SistemaProductosImpl implements SistemaProductos, Serializable {
         }
         return (SistemaProductosImpl) instance;
     }
+
     @Override
     public List<Producto> getListaProducto() {
         return listaProducto;
@@ -62,7 +62,6 @@ public class SistemaProductosImpl implements SistemaProductos, Serializable {
 
     @Override
     public void ingresarProducto(Producto producto) {
-        producto.setId(listaProducto.size());
         listaProducto.add(producto);
     }
 
@@ -83,6 +82,7 @@ public class SistemaProductosImpl implements SistemaProductos, Serializable {
         }
         return -1;
     }
+
     @Override
     public int busquedaLinealProductos(String nombre) {
         for (int i = 0; i < listaProducto.size(); i++) {
@@ -92,40 +92,19 @@ public class SistemaProductosImpl implements SistemaProductos, Serializable {
         }
         return -1; // El producto no se encontró
     }
+
     @Override
     public boolean eliminarProducto(Producto producto) {
         listaProducto.remove(busquedaLinealProductos(producto.getNombre()));
         return true;
     }
+
     private void obtenerProductos() {
-        if(ConnectionDB.getInstance().isInternetAvailable()){
-            Firestore dataBase = ConnectionDB.getInstance().getDb();
-            try {
-                String fechaActualizacionStr = dataBase.collection("actualizaciones")
-                        .document("ultimaActualizacion").get().get().getString("fecha");
-                ZonedDateTime fechaActualizacion = ZonedDateTime.parse(fechaActualizacionStr, DateTimeFormatter.ISO_ZONED_DATE_TIME);
 
-                File file = new File("/productos.json");
-                ZonedDateTime fechaUltimaModificacion = ZonedDateTime.ofInstant(
-                        Instant.ofEpochMilli(file.lastModified()), ZoneId.systemDefault());
+        obtenerProductosJson();
 
-                long diferencia = ChronoUnit.SECONDS.between(fechaUltimaModificacion, fechaActualizacion);
-                System.out.println("Fecha de actualización: " + fechaActualizacion);
-                System.out.println("Fecha de última modificación: " + fechaUltimaModificacion);
-                System.out.println("Diferencia: " + diferencia);
-
-                if (Math.abs(diferencia) > 5 && file.exists()) {
-                    obtenerProductosJson();
-                } else {
-                    obtenerProductosDB();
-                }
-            } catch(Exception e) {
-                e.printStackTrace();
-            }
-        } else {
-            obtenerProductosJson();
-        }
     }
+
     private void obtenerProductosJson() {
         try {
             // Obtener la ruta del archivo JSON como un recurso
@@ -150,12 +129,13 @@ public class SistemaProductosImpl implements SistemaProductos, Serializable {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
 
                     // Obtener los datos del producto
+                    int id = jsonObject.getInt("id");
                     String nombre = jsonObject.getString("nombre");
                     String codigo = jsonObject.getString("categoria");
                     int cantidad = jsonObject.getInt("cantidad");
 
                     // Crear un nuevo objeto Producto y agregarlo a la lista
-                    Producto producto = new Producto(codigo,nombre, cantidad);
+                    Producto producto = new Producto(id,codigo, nombre, cantidad);
                     ingresarProducto(producto);
                 }
             } else {
@@ -167,27 +147,36 @@ public class SistemaProductosImpl implements SistemaProductos, Serializable {
             throw new RuntimeException(e);
         }
     }
-    private void obtenerProductosDB() {
-        Firestore dataBase = ConnectionDB.getInstance().getDb();
-        try {
-            List<QueryDocumentSnapshot> documents =
-                    dataBase.collection("productos").get().get().getDocuments();
-            for (QueryDocumentSnapshot document : documents) {
-                Producto producto = new Producto(
-                        document.getString("categoria"),
-                        document.getString("nombre"),
-                        document.getLong("cantidad").intValue()
-                );
-                producto.setId(document.getLong("id").intValue());
-                listaProducto.add(producto);
 
+    @Override
+    public void guardarProductos() throws JSONException {
+        JSONArray jsonArray = new JSONArray();
+        for (Producto producto : listaProducto) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("id", producto.getId());
+            jsonObject.put("categoria", producto.getCategoria());
+            jsonObject.put("nombre", producto.getNombre());
+            jsonObject.put("cantidad", producto.getCantidad());
+            jsonArray.put(jsonObject);
+        }
+
+        try {
+            File file = new File("/productos.json");
+            File parentDir = file.getParentFile();
+            if (!parentDir.exists()) {
+                parentDir.mkdirs();
             }
-            if(listaProducto.isEmpty()){
-                obtenerProductosJson();
+            if (!file.exists()) {
+                file.createNewFile();
             }
-        } catch(Exception e) {
+            try (FileWriter writer = new FileWriter(file)) {
+                writer.write(jsonArray.toString(4));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
 }
+

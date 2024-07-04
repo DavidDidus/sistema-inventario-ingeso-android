@@ -47,6 +47,7 @@ public class VerActivity extends AppCompatActivity {
         fabEdit = findViewById(R.id.fabEdit);
         fabDelete = findViewById(R.id.fabDelete);
         guardarButton = findViewById(R.id.EditButton);
+        guardarButton.setBackgroundColor(Color.rgb(102, 187, 106));
     }
 
     private void setupInitialData() {

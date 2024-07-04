@@ -1,5 +1,7 @@
 package Logica;
 
+import org.json.JSONException;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -87,5 +89,11 @@ public class SistemaFacadeImpl implements SistemaFacade{
     @Override
     public void actualizarMateriasPrimas(Collection<MateriaPrima> materiasPrimasActualizadas) {
         materiasPrimas.actualizarMateriasPrimas(materiasPrimasActualizadas);
+    }
+
+    @Override
+    public void guardarCambios() throws JSONException {
+        materiasPrimas.guardarMateriasPrimas();
+        productos.guardarProductos();
     }
 }

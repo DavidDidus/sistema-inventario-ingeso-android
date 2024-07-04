@@ -1,5 +1,7 @@
 package Logica;
 
+import org.json.JSONException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,5 +15,6 @@ public interface SistemaProductos {
     public int busquedaBinariaProductos(int id);
     public int busquedaLinealProductos(String nombre);
     public boolean eliminarProducto(Producto producto);
+    void guardarProductos() throws JSONException;
 
 }

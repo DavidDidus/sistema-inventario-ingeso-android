@@ -10,5 +10,7 @@
     <color name="colorBackground">#FFFFFF</color>
     <color name="colorTextPrimary">#000000</color>
     <color name="colorTextSecondary">#757575</color>
+    <color name="rosadoPasterl">#F06292</color>
+    <color name="verdePastel">#66BB6A</color>
 
 </resources>

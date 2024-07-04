@@ -1,5 +1,7 @@
 package Logica;
 
+import org.json.JSONException;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -20,4 +22,5 @@ public interface SistemaMateriaPrima {
     int busquedaLineal(int id);
 
     void actualizarMateriasPrimas(Collection<MateriaPrima> materiasPrimasActualizadas);
+    void guardarMateriasPrimas() throws JSONException;
 }

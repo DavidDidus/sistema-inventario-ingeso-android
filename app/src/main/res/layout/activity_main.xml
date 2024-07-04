@@ -6,12 +6,22 @@
     android:layout_height="match_parent"
     tools:context="Logica.MainActivity">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="129dp"
+        android:layout_height="106dp"
+        android:layout_marginStart="36dp"
+        app:layout_constraintBottom_toTopOf="@+id/productButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/_370329" />
+
     <Button
         android:id="@+id/productButton"
+        style="@style/Widget.Material3.Button"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="68dp"
-        android:layout_marginTop="176dp"
+        android:layout_marginTop="208dp"
         android:onClick="pressProductButton"
         android:text="Ver productos"
         app:layout_constraintEnd_toStartOf="@+id/Elotrobutton"
@@ -20,9 +30,10 @@
 
     <Button
         android:id="@+id/Elotrobutton"
+        style="@style/Widget.Material3.Button"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="176dp"
+        android:layout_marginTop="208dp"
         android:layout_marginEnd="69dp"
         android:onClick="pressMateriasButton"
         android:text="Ver materias primas"
@@ -30,13 +41,13 @@
         app:layout_constraintStart_toEndOf="@+id/productButton"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="72dp"
-        android:text="Menu"
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="129dp"
+        android:layout_height="106dp"
+        android:layout_marginEnd="36dp"
+        app:layout_constraintBottom_toTopOf="@+id/Elotrobutton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:srcCompat="@drawable/_965919_200" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

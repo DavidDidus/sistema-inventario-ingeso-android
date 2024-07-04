@@ -1,162 +1,200 @@
 [
     {
         "categoria": "Facial",
+        "id": 0,
+        "cantidad": 3,
+        "nombre": "Jabones Limpiadores Faciales"
+    },
+    {
+        "categoria": "Facial",
+        "id": 1,
         "cantidad": 0,
         "nombre": "Jabones Limpiadores Faciales"
     },
     {
         "categoria": "Facial",
-        "cantidad": 0,
-        "nombre": "Jabon Solido de Arroz"
-    },
-    {
-        "categoria": "Facial",
-        "cantidad": 0,
-        "nombre": "Agua de Rosas"
-    },
-    {
-        "categoria": "Facial",
-        "cantidad": 0,
-        "nombre": "Desmaquillante Bifasico Piel Sensible"
-    },
-    {
-        "categoria": "Facial",
-        "cantidad": 0,
-        "nombre": "Desmaquillante Bifasico Piel Normal"
-    },
-    {
-        "categoria": "Facial",
-        "cantidad": 0,
-        "nombre": "Desmaquillante Bifasico Piel Grasa"
-    },
-    {
-        "categoria": "Facial",
-        "cantidad": 0,
-        "nombre": "Tonico Facial Piel Grasa"
-    },
-    {
-        "categoria": "Facial",
+        "id": 10,
         "cantidad": 0,
         "nombre": "Leche Virginal"
     },
     {
         "categoria": "Facial",
+        "id": 11,
         "cantidad": 0,
         "nombre": "Crema Antiedad"
     },
     {
         "categoria": "Facial",
-        "cantidad": 0,
-        "nombre": "Crema Tea Tree"
-    },
-    {
-        "categoria": "Facial",
-        "cantidad": 0,
-        "nombre": "Crema Piel Sensible"
-    },
-    {
-        "categoria": "Facial",
-        "cantidad": 0,
-        "nombre": "Serum para Manchas"
-    },
-    {
-        "categoria": "Facial",
-        "cantidad": 0,
-        "nombre": "Serum Anti Edad"
-    },
-    {
-        "categoria": "Facial",
-        "cantidad": 0,
-        "nombre": "Serum Piel Sensible"
-    },
-    {
-        "categoria": "Facial",
-        "cantidad": 0,
-        "nombre": "Serum de Espinillas"
-    },
-    {
-        "categoria": "Facial",
-        "cantidad": 0,
-        "nombre": "Serum Piel Grasa"
-    },
-    {
-        "categoria": "Facial",
-        "cantidad": 0,
-        "nombre": "Serum de pestaña"
-    },
-    {
-        "categoria": "Facial",
-        "cantidad": 0,
-        "nombre": "Contorno de Ojos"
-    },
-    {
-        "categoria": "Facial",
-        "cantidad": 0,
-        "nombre": "Serum Contorno de Ojos"
-    },
-    {
-        "categoria": "Facial",
-        "cantidad": 0,
-        "nombre": "Desmaquillante de Ojos"
-    },
-    {
-        "categoria": "Facial",
-        "cantidad": 0,
-        "nombre": "Mascarilla Facial Purificante"
-    },
-    {
-        "categoria": "Facial",
-        "cantidad": 0,
-        "nombre": "Mascarilla Exfoliante Facial Piel Normal a Seca"
-    },
-    {
-        "categoria": "Facial",
-        "cantidad": 0,
-        "nombre": "Mascarilla Facial Piel Sensible"
-    },
-    {
-        "categoria": "Facial",
-        "cantidad": 0,
-        "nombre": "Exfoliante Labial"
-    },
-    {
-        "categoria": "Facial",
+        "id": 12,
         "cantidad": 0,
         "nombre": "Lip Oil"
     },
     {
         "categoria": "Facial",
+        "id": 13,
         "cantidad": 0,
-        "nombre": "Lip Gloss"
+        "nombre": "Serum para Manchas"
     },
     {
         "categoria": "Facial",
+        "id": 14,
         "cantidad": 0,
-        "nombre": "Hidratantes Labiales"
+        "nombre": "Serum Anti Edad"
     },
     {
         "categoria": "Facial",
+        "id": 15,
         "cantidad": 0,
-        "nombre": "Balsamo Labial"
+        "nombre": "Serum Piel Sensible"
     },
     {
         "categoria": "Facial",
+        "id": 16,
         "cantidad": 0,
-        "nombre": "Blush Facial"
+        "nombre": "Serum Contorno de Ojos"
     },
     {
         "categoria": "Facial",
+        "id": 17,
         "cantidad": 0,
-        "nombre": "Iluminador Facial"
+        "nombre": "Serum de Espinillas"
+    },
+    {
+        "categoria": "Facial",
+        "id": 18,
+        "cantidad": 0,
+        "nombre": "Serum Piel Grasa"
+    },
+    {
+        "categoria": "Facial",
+        "id": 19,
+        "cantidad": 0,
+        "nombre": "Serum de pestaña"
     },
     {
         "categoria": "Corporal",
+        "id": 2,
         "cantidad": 0,
         "nombre": "Pomada de Cuticulas"
     },
     {
         "categoria": "Facial",
+        "id": 20,
+        "cantidad": 0,
+        "nombre": "Jabon Solido de Arroz"
+    },
+    {
+        "categoria": "Facial",
+        "id": 21,
+        "cantidad": 0,
+        "nombre": "Desmaquillante de Ojos"
+    },
+    {
+        "categoria": "Facial",
+        "id": 22,
+        "cantidad": 0,
+        "nombre": "Mascarilla Facial Purificante"
+    },
+    {
+        "categoria": "Facial",
+        "id": 23,
+        "cantidad": 0,
+        "nombre": "Lip Gloss"
+    },
+    {
+        "categoria": "Facial",
+        "id": 24,
+        "cantidad": 0,
+        "nombre": "Mascarilla Exfoliante Facial Piel Normal a Seca"
+    },
+    {
+        "categoria": "Facial",
+        "id": 25,
+        "cantidad": 0,
+        "nombre": "Mascarilla Facial Piel Sensible"
+    },
+    {
+        "categoria": "Facial",
+        "id": 26,
+        "cantidad": 0,
+        "nombre": "Exfoliante Labial"
+    },
+    {
+        "categoria": "Facial",
+        "id": 27,
+        "cantidad": 0,
+        "nombre": "Crema Tea Tree"
+    },
+    {
+        "categoria": "Facial",
+        "id": 28,
+        "cantidad": 0,
+        "nombre": "Hidratantes Labiales"
+    },
+    {
+        "categoria": "Facial",
+        "id": 29,
+        "cantidad": 0,
+        "nombre": "Balsamo Labial"
+    },
+    {
+        "categoria": "Facial",
+        "id": 3,
         "cantidad": 0,
         "nombre": "Cremas Corporales"
+    },
+    {
+        "categoria": "Facial",
+        "id": 30,
+        "cantidad": 0,
+        "nombre": "Blush Facial"
+    },
+    {
+        "categoria": "Facial",
+        "id": 31,
+        "cantidad": 0,
+        "nombre": "Agua de Rosas"
+    },
+    {
+        "categoria": "Facial",
+        "id": 32,
+        "cantidad": 0,
+        "nombre": "Iluminador Facial"
+    },
+    {
+        "categoria": "Facial",
+        "id": 4,
+        "cantidad": 0,
+        "nombre": "Contorno de Ojos"
+    },
+    {
+        "categoria": "Facial",
+        "id": 5,
+        "cantidad": 0,
+        "nombre": "Desmaquillante Bifasico Piel Sensible"
+    },
+    {
+        "categoria": "Facial",
+        "id": 6,
+        "cantidad": 0,
+        "nombre": "Desmaquillante Bifasico Piel Normal"
+    },
+    {
+        "categoria": "Facial",
+        "id": 7,
+        "cantidad": 0,
+        "nombre": "Desmaquillante Bifasico Piel Grasa"
+    },
+    {
+        "categoria": "Facial",
+        "id": 8,
+        "cantidad": 0,
+        "nombre": "Crema Piel Sensible"
+    },
+    {
+        "categoria": "Facial",
+        "id": 9,
+        "cantidad": 0,
+        "nombre": "Tonico Facial Piel Grasa"
     }
 ]

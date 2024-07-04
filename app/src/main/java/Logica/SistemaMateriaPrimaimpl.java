@@ -6,25 +6,17 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.QueryDocumentSnapshot;
-import com.google.cloud.firestore.SetOptions;
-import com.google.cloud.firestore.WriteBatch;
-
 import Dominio.MateriaPrima;
-import DataBase.ConnectionDB;
+
 
 
 
@@ -115,29 +107,7 @@ public class SistemaMateriaPrimaimpl implements SistemaMateriaPrima {
             }
         }
     }
-    private void obtenerMateriasPrimasDB() {
-        Firestore dataBase = ConnectionDB.getInstance().getDb();
-        try {
-            List<QueryDocumentSnapshot> documents =
-                    dataBase.collection("materias_primas").get().get().getDocuments();
-            for (QueryDocumentSnapshot document : documents) {
-                MateriaPrima materiaPrima = new MateriaPrima(
-                        document.getString("nombre"),
-                        document.getDouble("cantidad"),
-                        document.getString("unidad")
-                );
-                double idDouble = document.getDouble("id");
-                int id = (int) idDouble;
-                materiaPrima.setId(id);
-                listaMateriaPrima.add(materiaPrima);
-            }
-            if(listaMateriaPrima.isEmpty()){
-                obtenerMateriasPrimasJson();
-            }
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-    }
+
     private void obtenerMateriasPrimasJson(){
         try {
             // Obtener la ruta del archivo JSON como un recurso
@@ -162,12 +132,13 @@ public class SistemaMateriaPrimaimpl implements SistemaMateriaPrima {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
 
                     // Obtener los datos del producto
+                    int id = jsonObject.getInt("id");
                     String nombre = jsonObject.getString("nombre");
                     String unidad = jsonObject.getString("unidad");
                     double cantidad = jsonObject.getInt("cantidad");
 
                     // Crear un nuevo objeto Producto y agregarlo a la lista
-                    MateriaPrima nuevo = new MateriaPrima(nombre,cantidad,unidad);
+                    MateriaPrima nuevo = new MateriaPrima(id,nombre,cantidad,unidad);
                     ingresarMateriaPrima(nuevo);
                 }
             } else {
@@ -180,38 +151,43 @@ public class SistemaMateriaPrimaimpl implements SistemaMateriaPrima {
         }
     }
     private void obtenerMateriasPrimas() {
-        if(ConnectionDB.getInstance().isInternetAvailable()){
-            Firestore dataBase = ConnectionDB.getInstance().getDb();
-            try {
-                String fechaActualizacionStr = dataBase.collection("actualizaciones")
-                        .document("ultimaActualizacion").get().get().getString("fecha");
-                ZonedDateTime fechaActualizacion = ZonedDateTime.parse(fechaActualizacionStr, DateTimeFormatter.ISO_ZONED_DATE_TIME);
+        obtenerMateriasPrimasJson();
 
-                File file = new File("/materias_primas.json");
-                ZonedDateTime fechaUltimaModificacion = ZonedDateTime.ofInstant(
-                        Instant.ofEpochMilli(file.lastModified()), ZoneId.systemDefault());
+    }
+    public void guardarMateriasPrimas() throws JSONException {
+        JSONArray jsonArray = new JSONArray();
+        for (MateriaPrima materiaPrima : listaMateriaPrima) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("id",materiaPrima.getId());
+            jsonObject.put("nombre", materiaPrima.getNombre());
+            jsonObject.put("cantidad", materiaPrima.getCantidad());
+            jsonObject.put("unidad", materiaPrima.getUnidad());
+            jsonArray.put(jsonObject);
+        }
 
-                long diferencia = ChronoUnit.SECONDS.between(fechaUltimaModificacion, fechaActualizacion);
-
-                System.out.println("Fecha de actualización: " + fechaActualizacion);
-                System.out.println("Fecha de última modificación: " + fechaUltimaModificacion);
-                System.out.println("Diferencia: " + diferencia);
-
-                if (Math.abs(diferencia) > 5 && file.exists()) {
-                    obtenerMateriasPrimasJson();
-                } else {
-                    obtenerMateriasPrimasDB();
-                }
-            } catch(Exception e) {
-                e.printStackTrace();
+        try {
+            File file = new File("/materias_primas.json");
+            File parentDir = file.getParentFile();
+            if (!parentDir.exists()) {
+                parentDir.mkdirs();
             }
-        } else {
-            obtenerMateriasPrimasJson();
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            try (FileWriter writer = new FileWriter(file)) {
+                writer.write(jsonArray.toString(4));
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
 
-}
+    }
 
 
 
