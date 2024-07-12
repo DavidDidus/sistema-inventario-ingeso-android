@@ -23,7 +23,7 @@ import Logica.SistemaFacadeImpl;
 public class EditarProductoActivity extends AppCompatActivity{
 
     private EditText etProductName, etProductCategory, etProductAmount;
-    private FloatingActionButton fabEdit;
+    private FloatingActionButton fabEdit,fabDelete;
     private static Producto producto;
     private SistemaFacade sistema;
     private Button guardarButton;
@@ -39,10 +39,13 @@ public class EditarProductoActivity extends AppCompatActivity{
         etProductCategory = findViewById(R.id.etProductCategory);
         etProductAmount = findViewById(R.id.etProductAmount);
 
-        sistema = SistemaFacadeImpl.getInstancia();
+        sistema = SistemaFacadeImpl.getInstancia(getApplicationContext());
 
         fabEdit = findViewById(R.id.fabEdit);
         fabEdit.setVisibility(View.INVISIBLE);
+
+        fabDelete = findViewById(R.id.fabDelete);
+        fabDelete.setVisibility(View.INVISIBLE);
 
         guardarButton = findViewById(R.id.EditButton);
         guardarButton.setVisibility(View.VISIBLE);

@@ -33,7 +33,7 @@ public class SeleccionarMateriasPrimasActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seleccionar_materias_primas);
 
-        sistema = SistemaFacadeImpl.getInstancia();
+        sistema = SistemaFacadeImpl.getInstancia(getApplicationContext());
         listaMateriasPrimas = sistema.getListaMateriaPrima();
 
         recyclerView = findViewById(R.id.recyclerViewMateriasPrimas);

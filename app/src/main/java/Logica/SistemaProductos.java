@@ -15,6 +15,7 @@ public interface SistemaProductos {
     public int busquedaBinariaProductos(int id);
     public int busquedaLinealProductos(String nombre);
     public boolean eliminarProducto(Producto producto);
-    void guardarProductos() throws JSONException;
+    void guardarProductosEnFirestore();
 
+    void obtenerProductos();
 }

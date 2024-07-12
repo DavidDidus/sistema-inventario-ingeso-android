@@ -1,49 +1,47 @@
 package Logica;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+
+import org.json.JSONException;
+
 import java.io.Serializable;
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
-import DataBase.ConnectionDB;
-import Dominio.MateriaPrima;
+import DataBase.DbLocal;
 import Dominio.Producto;
+import Utils.NetworkUtils;
 
 public class SistemaProductosImpl implements SistemaProductos, Serializable {
     private List<Producto> listaProducto;
-
     private static SistemaProductos instance;
+    private Context context;
+    private DbLocal dbLocal;
 
-    private SistemaProductosImpl() {
+    private SistemaProductosImpl(Context context) {
+        this.context = context;
+        this.dbLocal = new DbLocal(context);
         listaProducto = new ArrayList<>();
-        obtenerProductos();
 
     }
 
-    // Método estático para obtener la única instancia de la clase
-    public static synchronized SistemaProductosImpl getInstance() {
+    public static synchronized SistemaProductosImpl getInstance(Context context) {
         if (instance == null) {
-            instance = new SistemaProductosImpl();
+            instance = new SistemaProductosImpl(context);
         }
         return (SistemaProductosImpl) instance;
     }
 
     @Override
     public List<Producto> getListaProducto() {
+        obtenerProductos();
         return listaProducto;
     }
 
@@ -51,18 +49,17 @@ public class SistemaProductosImpl implements SistemaProductos, Serializable {
     public boolean editarProducto(Producto producto) {
         int posProducto = busquedaBinariaProductos(producto.getId());
         if (posProducto != -1) {
-            // Actualizar el producto en la lista
             listaProducto.set(posProducto, producto);
+            actualizarProductoEnBD(producto);
             return true;
         }
         return false;
-
     }
-
 
     @Override
     public void ingresarProducto(Producto producto) {
         listaProducto.add(producto);
+        guardarProductoEnBD(producto);
     }
 
     @Override
@@ -87,96 +84,140 @@ public class SistemaProductosImpl implements SistemaProductos, Serializable {
     public int busquedaLinealProductos(String nombre) {
         for (int i = 0; i < listaProducto.size(); i++) {
             if (nombre.equalsIgnoreCase(listaProducto.get(i).getNombre())) {
-                return i; // Se ha encontrado el producto
+                return i;
             }
         }
-        return -1; // El producto no se encontró
+        return -1;
     }
 
     @Override
     public boolean eliminarProducto(Producto producto) {
-        listaProducto.remove(busquedaLinealProductos(producto.getNombre()));
-        return true;
+        int pos = busquedaLinealProductos(producto.getNombre());
+        if (pos != -1) {
+            listaProducto.remove(pos);
+            eliminarProductoDeBD(producto.getId());
+            return true;
+        }
+        return false;
     }
 
-    private void obtenerProductos() {
 
-        obtenerProductosJson();
-
-    }
-
-    private void obtenerProductosJson() {
-        try {
-            // Obtener la ruta del archivo JSON como un recurso
-            InputStream inputStream = getClass().getResourceAsStream("/productos.json");
-
-            // Verificar que el archivo se haya cargado correctamente
-            if (inputStream != null) {
-                // Leer el contenido del archivo JSON
-                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-                StringBuilder content = new StringBuilder();
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    content.append(line);
-                }
-                reader.close();
-
-                // Convertir el contenido a un objeto JSON
-                JSONArray jsonArray = new JSONArray(content.toString());
-
-                // Iterar sobre cada objeto JSON en el array
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-                    // Obtener los datos del producto
-                    int id = jsonObject.getInt("id");
-                    String nombre = jsonObject.getString("nombre");
-                    String codigo = jsonObject.getString("categoria");
-                    int cantidad = jsonObject.getInt("cantidad");
-
-                    // Crear un nuevo objeto Producto y agregarlo a la lista
-                    Producto producto = new Producto(id,codigo, nombre, cantidad);
-                    ingresarProducto(producto);
-                }
-            } else {
-                System.err.println("No se pudo cargar el archivo JSON de productos.");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+    public void obtenerProductos() {
+        if (NetworkUtils.isInternetAvailable(context)) {
+            System.out.println("Internet disponible");
+            obtenerProductosDesdeFirestore();
+        } else {
+            System.out.println("Internet no disponible");
+            obtenerProductosDesdeBD();
         }
     }
 
-    @Override
-    public void guardarProductos() throws JSONException {
-        JSONArray jsonArray = new JSONArray();
+    private void obtenerProductosDesdeFirestore() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("productos")
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                        Producto producto = new Producto(
+                                document.getLong("id").intValue(),
+                                document.getString("categoria"),
+                                document.getString("nombre"),
+                                document.getLong("cantidad").intValue()
+                        );
+                        listaProducto.add(producto);
+                    }
+                    if (listaProducto.isEmpty()) {
+                        obtenerProductosDesdeBD();
+                    } else {
+                        guardarProductosEnBD();
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    System.err.println("Error al obtener productos de Firestore: " + e.getMessage());
+                    obtenerProductosDesdeBD();
+                });
+    }
+
+    private void obtenerProductosDesdeBD() {
+        listaProducto.clear();
+        SQLiteDatabase db = dbLocal.getReadableDatabase();
+        Cursor cursor = db.query(DbLocal.TABLE_PRODUCTOS, null, null, null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Producto producto = new Producto(
+                        cursor.getInt(cursor.getColumnIndexOrThrow("id")),
+                        cursor.getString(cursor.getColumnIndexOrThrow("categoria")),
+                        cursor.getString(cursor.getColumnIndexOrThrow("nombre")),
+                        cursor.getInt(cursor.getColumnIndexOrThrow("cantidad"))
+                );
+                listaProducto.add(producto);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+    }
+
+    private void guardarProductoEnBD(Producto producto) {
+        SQLiteDatabase db = dbLocal.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("id", producto.getId());
+        values.put("categoria", producto.getCategoria());
+        values.put("nombre", producto.getNombre());
+        values.put("cantidad", producto.getCantidad());
+
+        db.insert(DbLocal.TABLE_PRODUCTOS, null, values);
+    }
+
+    private void actualizarProductoEnBD(Producto producto) {
+        SQLiteDatabase db = dbLocal.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("categoria", producto.getCategoria());
+        values.put("nombre", producto.getNombre());
+        values.put("cantidad", producto.getCantidad());
+
+        String selection = "id = ?";
+        String[] selectionArgs = {String.valueOf(producto.getId())};
+
+        db.update(DbLocal.TABLE_PRODUCTOS, values, selection, selectionArgs);
+    }
+
+    private void eliminarProductoDeBD(int id) {
+        SQLiteDatabase db = dbLocal.getWritableDatabase();
+        String selection = "id = ?";
+        String[] selectionArgs = {String.valueOf(id)};
+        db.delete(DbLocal.TABLE_PRODUCTOS, selection, selectionArgs);
+    }
+
+    private void guardarProductosEnBD() {
+        SQLiteDatabase db = dbLocal.getWritableDatabase();
+        db.beginTransaction();
+        try {
+            db.delete(DbLocal.TABLE_PRODUCTOS, null, null); // Limpiar tabla antes de insertar nuevos datos
+            for (Producto producto : listaProducto) {
+                ContentValues values = new ContentValues();
+                values.put("id", producto.getId());
+                values.put("categoria", producto.getCategoria());
+                values.put("nombre", producto.getNombre());
+                values.put("cantidad", producto.getCantidad());
+                db.insert(DbLocal.TABLE_PRODUCTOS, null, values);
+            }
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+        }
+    }
+
+    public void guardarProductosEnFirestore() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference productosRef = db.collection("productos");
         for (Producto producto : listaProducto) {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("id", producto.getId());
-            jsonObject.put("categoria", producto.getCategoria());
-            jsonObject.put("nombre", producto.getNombre());
-            jsonObject.put("cantidad", producto.getCantidad());
-            jsonArray.put(jsonObject);
-        }
-
-        try {
-            File file = new File("/productos.json");
-            File parentDir = file.getParentFile();
-            if (!parentDir.exists()) {
-                parentDir.mkdirs();
-            }
-            if (!file.exists()) {
-                file.createNewFile();
-            }
-            try (FileWriter writer = new FileWriter(file)) {
-                writer.write(jsonArray.toString(4));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+            productosRef.document(String.valueOf(producto.getId()))
+                    .set(producto)
+                    .addOnSuccessListener(aVoid -> System.out.println("Producto guardado con éxito: " + producto.getNombre()))
+                    .addOnFailureListener(e -> {
+                        System.err.println("Error al guardar producto: " + producto.getNombre());
+                        e.printStackTrace();
+                    });
         }
     }
 }
-

@@ -34,7 +34,7 @@ public class NuevoProductoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ingresar_producto);
 
-        sistema = SistemaFacadeImpl.getInstancia();
+        sistema = SistemaFacadeImpl.getInstancia(getApplicationContext());
 
         etProductName = findViewById(R.id.etProductName);
         etProductCategory = findViewById(R.id.etProductCategory);

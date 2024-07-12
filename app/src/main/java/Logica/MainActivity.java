@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.sistema_inventario_ingeso.R;
+import com.google.firebase.FirebaseApp;
 
 import org.json.JSONException;
 
@@ -29,7 +30,8 @@ public class MainActivity extends AppCompatActivity implements Serializable {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        sistema = SistemaFacadeImpl.getInstancia();
+        FirebaseApp.initializeApp(this);
+
         productos = findViewById(R.id.productButton);
         materiaPrima = findViewById(R.id.Elotrobutton);
 
@@ -55,12 +57,16 @@ public class MainActivity extends AppCompatActivity implements Serializable {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        try {
-            sistema.guardarCambios();
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+    protected void onStart() {
+        super.onStart();
+        sistema = SistemaFacadeImpl.getInstancia(getApplicationContext());
+        sistema.obtenerProductos();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        sistema = SistemaFacadeImpl.getInstancia(getApplicationContext());
+
     }
 }

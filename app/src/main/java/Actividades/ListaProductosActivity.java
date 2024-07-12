@@ -36,7 +36,7 @@ public class ListaProductosActivity extends AppCompatActivity implements SearchV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_productos);
 
-        sistema = SistemaFacadeImpl.getInstancia();
+        sistema = SistemaFacadeImpl.getInstancia(getApplicationContext());
 
         listaProductos = findViewById(R.id.listaProductos);
         listaProductos.setLayoutManager(new LinearLayoutManager(this));

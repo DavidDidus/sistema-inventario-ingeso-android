@@ -53,7 +53,7 @@ public class VerMateriaPrimaActivity extends AppCompatActivity {
     }
 
     private void setupSistemaFacade() {
-        sistema = SistemaFacadeImpl.getInstancia();
+        sistema = SistemaFacadeImpl.getInstancia(getApplicationContext());
     }
 
     private void setupSpinner() {

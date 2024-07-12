@@ -1,5 +1,8 @@
 package Logica;
 
+import android.content.Context;
+import android.util.Log;
+
 import org.json.JSONException;
 
 import java.util.Collection;
@@ -12,13 +15,15 @@ public class SistemaFacadeImpl implements SistemaFacade{
     private static SistemaFacade instancia;
     private SistemaMateriaPrima materiasPrimas;
     private SistemaProductos productos;
-    private SistemaFacadeImpl(){
-        materiasPrimas = SistemaMateriaPrimaimpl.getInstance();
-        productos = SistemaProductosImpl.getInstance();
+    private Context context;
+
+    private SistemaFacadeImpl(Context context){
+        materiasPrimas = SistemaMateriaPrimaImpl.getInstance(context);
+        productos = SistemaProductosImpl.getInstance(context);
     }
-    public static SistemaFacade getInstancia() {
+    public static SistemaFacade getInstancia(Context context) {
         if(instancia == null){
-            instancia = new SistemaFacadeImpl();
+            instancia = new SistemaFacadeImpl(context);
         }
         return instancia;
     }
@@ -91,9 +96,13 @@ public class SistemaFacadeImpl implements SistemaFacade{
         materiasPrimas.actualizarMateriasPrimas(materiasPrimasActualizadas);
     }
 
+
+
     @Override
-    public void guardarCambios() throws JSONException {
-        materiasPrimas.guardarMateriasPrimas();
-        productos.guardarProductos();
+    public void guardarProductosEnFirestore() {
+        productos.guardarProductosEnFirestore();
+    }
+    public void obtenerProductos(){
+        productos.obtenerProductos();
     }
 }

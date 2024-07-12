@@ -31,7 +31,7 @@ public class NuevaMateriaPrimaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nueva_materia_prima);
 
-        sistema = SistemaFacadeImpl.getInstancia();
+        sistema = SistemaFacadeImpl.getInstancia(getApplicationContext());
 
         etMateriaPrimaNombre = findViewById(R.id.etMateriaPrimaNombre);
         etMateriaPrimaCant = findViewById(R.id.etMateriaPrimacant);

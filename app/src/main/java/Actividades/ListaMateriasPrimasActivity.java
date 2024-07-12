@@ -31,7 +31,7 @@ public class ListaMateriasPrimasActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_materias_primas);
 
-        sistema = SistemaFacadeImpl.getInstancia();
+        sistema = SistemaFacadeImpl.getInstancia(getApplicationContext());
 
         listaMateriaPrima = findViewById(R.id.listaMateriasPrimas);
         listaMateriaPrima.setLayoutManager(new LinearLayoutManager(this));

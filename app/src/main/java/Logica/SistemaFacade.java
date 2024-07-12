@@ -27,5 +27,6 @@ public interface SistemaFacade {
     int busquedaMateriasPrimas(int idMateriaPrima);
 
     void actualizarMateriasPrimas(Collection<MateriaPrima> materiasPrimasActualizadas);
-    void guardarCambios() throws JSONException;
+    void guardarProductosEnFirestore();
+    void obtenerProductos();
 }

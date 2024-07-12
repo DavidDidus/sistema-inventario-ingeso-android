@@ -44,7 +44,7 @@ public class EditarMateriaPrimaActivity extends AppCompatActivity {
 
         unidades.setVisibility(View.VISIBLE);
 
-        sistema = SistemaFacadeImpl.getInstancia();
+        sistema = SistemaFacadeImpl.getInstancia(getApplicationContext());
 
         fabEdit = findViewById(R.id.fabEdit);
         fabEdit.setVisibility(View.INVISIBLE);
