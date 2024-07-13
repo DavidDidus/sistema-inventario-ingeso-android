@@ -43,7 +43,7 @@
             app:layout_constraintTop_toBottomOf="@+id/etProductName" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/AddProducto"
         style="@style/Widget.AppCompat.Button"
         android:layout_width="408dp"
         android:layout_height="wrap_content"

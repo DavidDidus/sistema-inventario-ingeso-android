@@ -5,6 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import org.json.JSONException;
 
 import java.util.ArrayList;
@@ -13,6 +16,7 @@ import java.util.List;
 
 import DataBase.DbLocal;
 import Dominio.MateriaPrima;
+import Dominio.Producto;
 
 public class SistemaMateriaPrimaImpl implements SistemaMateriaPrima {
     private static SistemaMateriaPrima instance;
@@ -25,6 +29,7 @@ public class SistemaMateriaPrimaImpl implements SistemaMateriaPrima {
         this.dbLocal = new DbLocal(context);
         listaMateriaPrima = new ArrayList<>();
         obtenerMateriasPrimas();
+
 
     }
 
@@ -107,7 +112,6 @@ public class SistemaMateriaPrimaImpl implements SistemaMateriaPrima {
         }
     }
 
-
     private void obtenerMateriasPrimas() {
         listaMateriaPrima.clear();
         SQLiteDatabase db = dbLocal.getReadableDatabase();
@@ -156,5 +160,18 @@ public class SistemaMateriaPrimaImpl implements SistemaMateriaPrima {
         String selection = "id = ?";
         String[] selectionArgs = {String.valueOf(id)};
         db.delete(DbLocal.TABLE_MATERIAS_PRIMAS, selection, selectionArgs);
+    }
+    public void guardarProductosEnFirestore() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference productosRef = db.collection("materias_primas");
+        for (MateriaPrima materiaPrima : listaMateriaPrima) {
+            productosRef.document(String.valueOf(materiaPrima.getId()))
+                    .set(materiaPrima)
+                    .addOnSuccessListener(aVoid -> System.out.println("Materia Prima guardado con éxito: " + materiaPrima.getNombre()))
+                    .addOnFailureListener(e -> {
+                        System.err.println("Error al guardar producto: " + materiaPrima.getNombre());
+                        e.printStackTrace();
+                    });
+        }
     }
 }

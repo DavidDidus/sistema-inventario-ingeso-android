@@ -22,4 +22,5 @@ public interface SistemaMateriaPrima {
     int busquedaLineal(int id);
 
     void actualizarMateriasPrimas(Collection<MateriaPrima> materiasPrimasActualizadas);
+    void guardarProductosEnFirestore();
 }

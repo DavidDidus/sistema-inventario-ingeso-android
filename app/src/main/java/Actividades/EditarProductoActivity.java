@@ -1,6 +1,7 @@
 package Actividades;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -49,6 +50,7 @@ public class EditarProductoActivity extends AppCompatActivity{
 
         guardarButton = findViewById(R.id.EditButton);
         guardarButton.setVisibility(View.VISIBLE);
+        guardarButton.setBackgroundColor(Color.rgb(102, 187, 106));
 
         obtenerProducto();
 

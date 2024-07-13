@@ -36,7 +36,7 @@ public class NuevaMateriaPrimaActivity extends AppCompatActivity {
         etMateriaPrimaNombre = findViewById(R.id.etMateriaPrimaNombre);
         etMateriaPrimaCant = findViewById(R.id.etMateriaPrimacant);
         spinner = findViewById(R.id.spinner);
-        boton = findViewById(R.id.button);
+        boton = findViewById(R.id.AddMateriaPrima);
         boton.setBackgroundColor(Color.rgb(102, 187, 106));
 
         setupSpinner();

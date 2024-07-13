@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context="Logica.MainActivity">
 
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="129dp"
@@ -49,5 +50,6 @@
         app:layout_constraintBottom_toTopOf="@+id/Elotrobutton"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/_965919_200" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

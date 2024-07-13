@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "265410768544",
+    "project_id": "bienestarnatural-bf3f1",
+    "storage_bucket": "bienestarnatural-bf3f1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:265410768544:android:d73d67ada546394c98e3c5",
+        "android_client_info": {
+          "package_name": "com.example.sistema_inventario_ingeso"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCHl0XezIj-Zrw8Ra6N5RJ81TvmZnc9H6s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -99,8 +99,10 @@ public class SistemaFacadeImpl implements SistemaFacade{
 
 
     @Override
-    public void guardarProductosEnFirestore() {
+    public void guardarEnFirestore() {
         productos.guardarProductosEnFirestore();
+        materiasPrimas.guardarProductosEnFirestore();
+
     }
     public void obtenerProductos(){
         productos.obtenerProductos();

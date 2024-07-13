@@ -24,10 +24,11 @@ import Actividades.ListaProductosActivity;
 
 public class MainActivity extends AppCompatActivity implements Serializable {
 
-    SistemaFacade sistema;
-    Button productos,materiaPrima;
+    private SistemaFacade sistema;
+    private Button productos,materiaPrima;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         FirebaseApp.initializeApp(this);
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements Serializable {
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_principal,menu);
+
         return true;
     }
 
@@ -67,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements Serializable {
     protected void onStop() {
         super.onStop();
         sistema = SistemaFacadeImpl.getInstancia(getApplicationContext());
+        sistema.guardarEnFirestore();
 
     }
 }

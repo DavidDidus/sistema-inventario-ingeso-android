@@ -39,7 +39,7 @@ public class NuevoProductoActivity extends AppCompatActivity {
         etProductName = findViewById(R.id.etProductName);
         etProductCategory = findViewById(R.id.etProductCategory);
         etProductAmount = findViewById(R.id.etProductAmount);
-        boton = findViewById(R.id.button);
+        boton = findViewById(R.id.AddProducto);
         boton.setBackgroundColor(Color.rgb(102, 187, 106));
     }
 
