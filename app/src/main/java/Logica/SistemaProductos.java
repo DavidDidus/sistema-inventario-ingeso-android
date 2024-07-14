@@ -9,13 +9,11 @@ import Dominio.*;
 
 public interface SistemaProductos {
 
-    public List<Producto> getListaProducto();
-    public boolean editarProducto(Producto producto);
-    public void ingresarProducto(Producto producto);
-    public int busquedaBinariaProductos(int id);
-    public int busquedaLinealProductos(String nombre);
-    public boolean eliminarProducto(Producto producto);
+    List<Producto> getListaProducto();
+    boolean editarProducto(Producto producto);
+    void ingresarProducto(Producto producto);
+    int busquedaLinealProductos(int id);
+    boolean eliminarProducto(Producto producto);
     void guardarProductosEnFirestore();
-
     void obtenerProductos();
 }

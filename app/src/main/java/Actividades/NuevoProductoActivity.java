@@ -52,9 +52,16 @@ public class NuevoProductoActivity extends AppCompatActivity {
             if (isProductNameUnique(nombre)) {
                 productoNuevo = new Producto(sistema.getListaProducto().size(),categoria, nombre, cantidad);
 
-                // Lanzar la actividad para seleccionar materias primas
-                Intent intent = new Intent(this, SeleccionarMateriasPrimasActivity.class);
-                startActivityForResult(intent, REQUEST_CODE_SELECCIONAR_MATERIAS_PRIMAS);
+                if(cantidad > 0){
+                    Intent intent = new Intent(this, SeleccionarMateriasPrimasActivity.class);
+                    startActivityForResult(intent, REQUEST_CODE_SELECCIONAR_MATERIAS_PRIMAS);
+                }else{
+                    sistema.ingresarProducto(productoNuevo);
+                    Intent intent = new Intent(this, ListaProductosActivity.class);
+                    startActivity(intent);
+                }
+
+
             } else {
                 Toast.makeText(NuevoProductoActivity.this, "El nombre del producto ya existe. Por favor ingresa un nombre único.", Toast.LENGTH_SHORT).show();
             }
@@ -91,6 +98,7 @@ public class NuevoProductoActivity extends AppCompatActivity {
                 sistema.ingresarProducto(productoNuevo);
 
                 Toast.makeText(NuevoProductoActivity.this, "Producto " + productoNuevo.getNombre() + " ingresado.", Toast.LENGTH_SHORT).show();
+
 
                 Intent intent = new Intent(this, ListaProductosActivity.class);
                 startActivity(intent);

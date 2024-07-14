@@ -49,14 +49,12 @@ public class SistemaFacadeImpl implements SistemaFacade{
         productos.ingresarProducto(producto);
     }
 
-    @Override
-    public int busquedaBinariaProductos(int id) {
-        return productos.busquedaBinariaProductos(id);
-    }
+
+
 
     @Override
-    public int busquedaLinealProductos(String nombre) {
-        return productos.busquedaLinealProductos(nombre);
+    public int busquedaLinealProductos(int id) {
+        return productos.busquedaLinealProductos(id);
     }
 
 
@@ -68,11 +66,6 @@ public class SistemaFacadeImpl implements SistemaFacade{
     @Override
     public void ingresarMateriaPrima(MateriaPrima materiaPrima) {
         materiasPrimas.ingresarMateriaPrima(materiaPrima);
-    }
-
-    @Override
-    public int busquedaBinariaMateriasPrimas(int idMateriaPrima) {
-        return materiasPrimas.busquedaBinaria(idMateriaPrima);
     }
 
     @Override
@@ -91,12 +84,6 @@ public class SistemaFacadeImpl implements SistemaFacade{
     public int busquedaMateriasPrimas(int idMateriaPrima) {
         return materiasPrimas.busquedaLineal(idMateriaPrima);
     }
-    @Override
-    public void actualizarMateriasPrimas(Collection<MateriaPrima> materiasPrimasActualizadas) {
-        materiasPrimas.actualizarMateriasPrimas(materiasPrimasActualizadas);
-    }
-
-
 
     @Override
     public void guardarEnFirestore() {

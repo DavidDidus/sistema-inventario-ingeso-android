@@ -72,7 +72,7 @@ public class EditarProductoActivity extends AppCompatActivity{
         int idProducto = obtenerId();
 
         if (idProducto != -1) {
-            int posProducto = sistema.busquedaBinariaProductos(idProducto);
+            int posProducto = sistema.busquedaLinealProductos(idProducto);
 
             if (posProducto >= 0 && posProducto < sistema.getListaProducto().size()) {
                 producto = sistema.getListaProducto().get(posProducto);

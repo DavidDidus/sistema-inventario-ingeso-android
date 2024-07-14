@@ -22,13 +22,18 @@ import java.util.stream.Collectors;
 
 
 public class AdaptadorProductos extends RecyclerView.Adapter<AdaptadorProductos.ProductoViewHolder> {
-    public ArrayList<Producto> listaProductos;
-    ArrayList<Producto> listaOriginal;
+    private ArrayList<Producto> listaProductos;
+    private ArrayList<Producto> listaOriginal;
 
     public AdaptadorProductos(ArrayList<Producto> listaProductos) {
         this.listaProductos = new ArrayList<>(listaProductos);
         this.listaOriginal = new ArrayList<>(listaProductos);
     }
+
+    public ArrayList<Producto> getProductos() {
+        return listaProductos;
+    }
+
     public void filtrar(String buscado) {
         int longitud = buscado.length();
         if (longitud == 0) {

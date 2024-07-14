@@ -34,6 +34,7 @@ public class VerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ver_producto);
         sistema = SistemaFacadeImpl.getInstancia(getApplicationContext());
+        producto = (Producto) getIntent().getSerializableExtra("datos");
         initViews();
         setupInitialData();
         setupListeners();
@@ -51,7 +52,7 @@ public class VerActivity extends AppCompatActivity {
     }
 
     private void setupInitialData() {
-        producto = (Producto) getIntent().getSerializableExtra("datos");
+
         if (producto != null) {
             String productoNombre = producto.getNombre();
 
@@ -79,9 +80,10 @@ public class VerActivity extends AppCompatActivity {
         fabEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                System.out.println(producto.getNombre());
                 if (producto != null) {
                     Intent intent = new Intent(VerActivity.this, EditarProductoActivity.class);
-                    intent.putExtra("id", producto.getId()); // Asumiendo que el producto tiene un método getId()
+                    intent.putExtra("id", producto.getId());
                     startActivity(intent);
                 } else {
                     Toast.makeText(VerActivity.this, "Producto no encontrado", Toast.LENGTH_SHORT).show();

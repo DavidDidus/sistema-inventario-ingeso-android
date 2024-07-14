@@ -61,15 +61,15 @@ public class ListaProductosActivity extends AppCompatActivity implements SearchV
     @Override
     protected void onRestart() {
         super.onRestart();
-
-
         if (adapter != null) {
+            adapter.getProductos().clear();
             adapter.setProductos((ArrayList<Producto>) sistema.getListaProducto());
+            adapter.notifyDataSetChanged();
+
         } else {
             // Log de advertencia o mensaje de depuración para identificar el problema
             Log.e("ListaProductosActivity", "El adaptador es nulo en onResume()");
         }
-
     }
 
     @Override

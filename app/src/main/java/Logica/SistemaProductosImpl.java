@@ -39,16 +39,16 @@ public class SistemaProductosImpl implements SistemaProductos, Serializable {
 
     @Override
     public List<Producto> getListaProducto() {
-        obtenerProductos();
         return listaProducto;
     }
 
     @Override
     public boolean editarProducto(Producto producto) {
-        int posProducto = busquedaBinariaProductos(producto.getId());
+        int posProducto = busquedaLinealProductos(producto.getId());
         if (posProducto != -1) {
             listaProducto.set(posProducto, producto);
             actualizarProductoEnBD(producto);
+            actualizarProductoEnFirestore(producto); // Agregar actualización en Firestore
             return true;
         }
         return false;
@@ -57,31 +57,27 @@ public class SistemaProductosImpl implements SistemaProductos, Serializable {
     @Override
     public void ingresarProducto(Producto producto) {
         listaProducto.add(producto);
-        guardarProductoEnBD(producto);
+        try {
+            guardarProductoEnBD(producto);
+            guardarProductoEnFirestore(producto); // Agregar guardado en Firestore
+        } catch (Exception e) {
+            System.out.println("Ya agregado");
+        }
     }
 
-    @Override
-    public int busquedaBinariaProductos(int id) {
-        int posIzq = 0;
-        int posDer = listaProducto.size() - 1;
-
-        while (posIzq <= posDer) {
-            int posMid = posIzq + (posDer - posIzq) / 2;
-            if (id == listaProducto.get(posMid).getId()) {
-                return posMid;
-            } else if (id < listaProducto.get(posMid).getId()) {
-                posDer = posMid - 1;
-            } else {
-                posIzq = posMid + 1;
+    public int busquedaLinealProductos(String nombre) {
+        for (int i = 0; i < listaProducto.size(); i++) {
+            if (nombre.equalsIgnoreCase(listaProducto.get(i).getNombre())) {
+                return i;
             }
         }
         return -1;
     }
 
     @Override
-    public int busquedaLinealProductos(String nombre) {
+    public int busquedaLinealProductos(int id) {
         for (int i = 0; i < listaProducto.size(); i++) {
-            if (nombre.equalsIgnoreCase(listaProducto.get(i).getNombre())) {
+            if (id ==listaProducto.get(i).getId() ) {
                 return i;
             }
         }
@@ -94,11 +90,11 @@ public class SistemaProductosImpl implements SistemaProductos, Serializable {
         if (pos != -1) {
             listaProducto.remove(pos);
             eliminarProductoDeBD(producto.getId());
+            eliminarProductoDeFirestore(producto.getId());
             return true;
         }
         return false;
     }
-
 
     public void obtenerProductos() {
         if (NetworkUtils.isInternetAvailable(context)) {
@@ -115,6 +111,7 @@ public class SistemaProductosImpl implements SistemaProductos, Serializable {
         db.collection("productos")
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
+                    listaProducto.clear();
                     for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                         Producto producto = new Producto(
                                 document.getLong("id").intValue(),
@@ -127,7 +124,11 @@ public class SistemaProductosImpl implements SistemaProductos, Serializable {
                     if (listaProducto.isEmpty()) {
                         obtenerProductosDesdeBD();
                     } else {
-                        guardarProductosEnBD();
+                        try{
+                            guardarProductosEnBD();
+                        }catch(Exception e){
+                            System.out.println("Ya agregado");
+                        }
                     }
                 })
                 .addOnFailureListener(e -> {
@@ -165,6 +166,8 @@ public class SistemaProductosImpl implements SistemaProductos, Serializable {
 
         db.insert(DbLocal.TABLE_PRODUCTOS, null, values);
     }
+
+
 
     private void actualizarProductoEnBD(Producto producto) {
         SQLiteDatabase db = dbLocal.getWritableDatabase();
@@ -205,6 +208,8 @@ public class SistemaProductosImpl implements SistemaProductos, Serializable {
         }
     }
 
+
+
     public void guardarProductosEnFirestore() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference productosRef = db.collection("productos");
@@ -217,5 +222,43 @@ public class SistemaProductosImpl implements SistemaProductos, Serializable {
                         e.printStackTrace();
                     });
         }
+    }
+    public void eliminarProductoDeFirestore(int idProducto) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("productos").document(String.valueOf(idProducto))
+                .delete()
+                .addOnSuccessListener(aVoid -> {
+                    System.out.println("Producto eliminado con éxito de Firestore: " + idProducto);
+                    // También eliminar el producto de la lista local
+                    int posProducto = busquedaLinealProductos(idProducto);
+                    if (posProducto != -1) {
+                        listaProducto.remove(posProducto);
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    System.err.println("Error al eliminar el producto de Firestore: " + idProducto);
+                    e.printStackTrace();
+                });
+    }
+    private void actualizarProductoEnFirestore(Producto producto) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("productos").document(String.valueOf(producto.getId()))
+                .set(producto)
+                .addOnSuccessListener(aVoid -> System.out.println("Producto actualizado con éxito: " + producto.getNombre()))
+                .addOnFailureListener(e -> {
+                    System.err.println("Error al actualizar producto: " + producto.getNombre());
+                    e.printStackTrace();
+                });
+    }
+    private void guardarProductoEnFirestore(Producto producto) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference productosRef = db.collection("productos");
+        productosRef.document(String.valueOf(producto.getId()))
+                .set(producto)
+                .addOnSuccessListener(aVoid -> System.out.println("Producto guardado con éxito: " + producto.getNombre()))
+                .addOnFailureListener(e -> {
+                    System.err.println("Error al guardar producto: " + producto.getNombre());
+                    e.printStackTrace();
+                });
     }
 }

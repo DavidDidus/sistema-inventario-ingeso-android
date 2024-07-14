@@ -9,24 +9,16 @@ import Dominio.MateriaPrima;
 import Dominio.Producto;
 
 public interface SistemaFacade {
-    public List<Producto> getListaProducto();
+    List<Producto> getListaProducto();
     List<MateriaPrima> getListaMateriaPrima();
-    public boolean editarProducto(Producto producto);
-    public void ingresarProducto(Producto producto);
-    public int busquedaBinariaProductos(int id);
-    public int busquedaLinealProductos(String nombre);
-
-    public boolean eliminarProducto(Producto producto);
-    public void ingresarMateriaPrima(MateriaPrima materiaPrima);
-
-    int busquedaBinariaMateriasPrimas(int idMateriaPrima);
-
+    boolean editarProducto(Producto producto);
+    void ingresarProducto(Producto producto);
+    int busquedaLinealProductos(int id);
+    boolean eliminarProducto(Producto producto);
+    void ingresarMateriaPrima(MateriaPrima materiaPrima);
     boolean editarMateriaPrima(MateriaPrima materiaPrima);
     boolean eliminarMateriaPrima(MateriaPrima materiaPrima);
-
     int busquedaMateriasPrimas(int idMateriaPrima);
-
-    void actualizarMateriasPrimas(Collection<MateriaPrima> materiasPrimasActualizadas);
     void guardarEnFirestore();
     void obtenerProductos();
 }

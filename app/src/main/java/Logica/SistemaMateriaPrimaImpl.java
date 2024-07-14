@@ -42,9 +42,9 @@ public class SistemaMateriaPrimaImpl implements SistemaMateriaPrima {
 
     @Override
     public void ingresarMateriaPrima(MateriaPrima materiaPrima) {
-        materiaPrima.setId(listaMateriaPrima.size());
         listaMateriaPrima.add(materiaPrima);
         guardarMateriaPrimaEnBD(materiaPrima);
+        guardarMateriaPrimaEnFirestore(materiaPrima); // Agregar guardado en Firestore
     }
 
     @Override
@@ -52,28 +52,6 @@ public class SistemaMateriaPrimaImpl implements SistemaMateriaPrima {
         return listaMateriaPrima;
     }
 
-    @Override
-    public String busquedaLinealMateriaPrima(String materiaPrima) {
-        return null;
-    }
-
-    @Override
-    public int busquedaBinaria(int id) {
-        int posIzq = 0;
-        int posDer = listaMateriaPrima.size() - 1;
-
-        while (posIzq <= posDer) {
-            int posMid = posIzq + (posDer - posIzq) / 2;
-            if (id == listaMateriaPrima.get(posMid).getId()) {
-                return posMid;
-            } else if (id < listaMateriaPrima.get(posMid).getId()) {
-                posDer = posMid - 1;
-            } else {
-                posIzq = posMid + 1;
-            }
-        }
-        return -1;
-    }
 
     @Override
     public int busquedaLineal(int id) {
@@ -87,8 +65,9 @@ public class SistemaMateriaPrimaImpl implements SistemaMateriaPrima {
 
     @Override
     public boolean editarMateriaPrima(MateriaPrima materiaPrima) {
-        listaMateriaPrima.set(busquedaBinaria(materiaPrima.getId()), materiaPrima);
+        listaMateriaPrima.set(busquedaLineal(materiaPrima.getId()), materiaPrima);
         actualizarMateriaPrimaEnBD(materiaPrima);
+        actualizarMateriaPrimaEnFirestore(materiaPrima); // Agregar actualización en Firestore
         return true;
     }
 
@@ -96,21 +75,10 @@ public class SistemaMateriaPrimaImpl implements SistemaMateriaPrima {
     public boolean eliminarMateriaPrima(MateriaPrima materiaPrima) {
         listaMateriaPrima.remove(busquedaLineal(materiaPrima.getId()));
         eliminarMateriaPrimaDeBD(materiaPrima.getId());
+        eliminarMateriaPrimaDeFirestore(materiaPrima.getId());
         return true;
     }
 
-    @Override
-    public void actualizarMateriasPrimas(Collection<MateriaPrima> materiasPrimasActualizadas) {
-        for (MateriaPrima materiaPrimaActualizada : materiasPrimasActualizadas) {
-            for (MateriaPrima materiaPrima : listaMateriaPrima) {
-                if (materiaPrima.getId() == materiaPrimaActualizada.getId()) {
-                    materiaPrima.setCantidad(materiaPrimaActualizada.getCantidad());
-                    actualizarMateriaPrimaEnBD(materiaPrima);
-                    break;
-                }
-            }
-        }
-    }
 
     private void obtenerMateriasPrimas() {
         listaMateriaPrima.clear();
@@ -173,5 +141,43 @@ public class SistemaMateriaPrimaImpl implements SistemaMateriaPrima {
                         e.printStackTrace();
                     });
         }
+    }
+    private void guardarMateriaPrimaEnFirestore(MateriaPrima materiaPrima) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference materiasPrimasRef = db.collection("materias_primas");
+        materiasPrimasRef.document(String.valueOf(materiaPrima.getId()))
+                .set(materiaPrima)
+                .addOnSuccessListener(aVoid -> System.out.println("Materia Prima guardada con éxito: " + materiaPrima.getNombre()))
+                .addOnFailureListener(e -> {
+                    System.err.println("Error al guardar materia prima: " + materiaPrima.getNombre());
+                    e.printStackTrace();
+                });
+    }
+    public void eliminarMateriaPrimaDeFirestore(int idMateriaPrima) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("materias_primas").document(String.valueOf(idMateriaPrima))
+                .delete()
+                .addOnSuccessListener(aVoid -> {
+                    System.out.println("Materia Prima eliminada con éxito de Firestore: " + idMateriaPrima);
+                    // También eliminar la materia prima de la lista local
+                    int posMateriaPrima = busquedaLineal(idMateriaPrima);
+                    if (posMateriaPrima != -1) {
+                        listaMateriaPrima.remove(posMateriaPrima);
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    System.err.println("Error al eliminar la Materia Prima de Firestore: " + idMateriaPrima);
+                    e.printStackTrace();
+                });
+    }
+    private void actualizarMateriaPrimaEnFirestore(MateriaPrima materiaPrima) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("materias_primas").document(String.valueOf(materiaPrima.getId()))
+                .set(materiaPrima)
+                .addOnSuccessListener(aVoid -> System.out.println("Materia Prima actualizada con éxito: " + materiaPrima.getNombre()))
+                .addOnFailureListener(e -> {
+                    System.err.println("Error al actualizar materia prima: " + materiaPrima.getNombre());
+                    e.printStackTrace();
+                });
     }
 }

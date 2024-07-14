@@ -38,6 +38,9 @@ public class MainActivity extends AppCompatActivity implements Serializable {
 
         productos.setBackgroundColor(Color.rgb(102, 187, 106));
         materiaPrima.setBackgroundColor(Color.rgb(102, 187, 106));
+        sistema = SistemaFacadeImpl.getInstancia(getApplicationContext());
+        sistema.obtenerProductos();
+
     }
     public void pressProductButton(View v){
 
@@ -61,8 +64,6 @@ public class MainActivity extends AppCompatActivity implements Serializable {
     @Override
     protected void onStart() {
         super.onStart();
-        sistema = SistemaFacadeImpl.getInstancia(getApplicationContext());
-        sistema.obtenerProductos();
     }
 
     @Override
@@ -70,6 +71,6 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         super.onStop();
         sistema = SistemaFacadeImpl.getInstancia(getApplicationContext());
         sistema.guardarEnFirestore();
-
     }
+
 }
